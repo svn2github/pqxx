@@ -1,0 +1,4 @@
+Makefile
+Makefile.in
+libpqxx.mak
+test.mak
