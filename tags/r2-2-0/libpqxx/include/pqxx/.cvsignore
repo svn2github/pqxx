@@ -1,0 +1,9 @@
+Makefile
+Makefile.in
+config.h
+config.h.in
+libconfig.h
+stamp-h
+stamp-h.in
+stamp-h1
+stamp-h2
