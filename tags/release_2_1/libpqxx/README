@@ -1,0 +1,327 @@
+Introduction 
+
+Welcome to libpqxx, a C++ API to the PostgreSQL database management system.
+
+There are many similar libraries for PostgreSQL and for other databases, some
+of them database-independent.  Most of these, however, are fairly C-like in
+their programming style, and fail to take advantage of the full power of the C++
+language as it has matured since the acceptance of the Standard in 1996.  What 
+libpqxx brings you is effective use of templates to reduce the inconvenience of
+dealing with type conversions; of standard C++ strings to keep you from having 
+to worry about buffer allocation and overflow attacks; of exceptions to take
+the tedious and error-prone plumbing around error handling out of your hands;
+of constructors and destructors to bring resource management under control; and
+even basic object-orientation to give you some extra reliability features that
+would be hard to get with most other database interfaces.
+
+This package requires PostgreSQL to be installed--including the C headers for 
+client development.  The library builds on top of PostgreSQL's standard C API, 
+libpq.
+
+Further information, as well as updates, a mailing list, and a bug reporting
+system can be found at either of:
+
+	http://pqxx.tk/
+	http://gborg.postgresql.org/project/libpqxx/
+
+
+Getting Started
+
+All of this applies only to operating systems that are either part of, or
+closely resemble, or support the standard interfaces of, the Unix family.  This 
+includes MacOS X (starting with 10.2, a.k.a. Jaguar) as well as GNU/Linux, the
+various BSD systems, etc.  Windows users should skip to the Building on Windows
+section, unless they have a Unix-like environment like Cygwin installed.
+
+
+To get started quickly on a Unix-like system, do:
+
+./configure	# (plus suitable arguments, to set up the build environment)
+make		# (to build the library)
+
+# (set environment for regression test, see under "make check" below)
+# (this example assumes a dedicated libpqxx test database called pqxx)
+export PGDATABASE=pqxx
+
+make check	# (to run the library's self-test suite; see below)
+make install	# (with superuser privileges, to install the library; see below)
+
+Once this has succeeded, you should be able to link your own programs with 
+libpqxx.
+
+
+1. Configure
+
+But first, a word on those "suitable arguments."  These may or may not be
+needed on your particular system, so do try omitting them at first.  The most 
+important options are:
+
+--with-postgres=<path>
+to indicate the base PostgreSQL library and include path.  The build procedure 
+expects to find subdirectories include/ and lib/ there.  If, for instance, you
+have the PostgreSQL headers and libraries in /opt/pgsql/include/ and
+/opt/pgsql/libs/ respectively, all you need to specify this to the configure 
+script is "--with-postgres=/opt/pgsql".  If your PostgreSQL directories aren't
+laid out in this way, read on.
+
+--with-postgres-include=<path>
+to indicate just the PostgreSQL include path.  This is not needed if you use 
+the --with-postgres option.  If, for instance, the PostgreSQL headers are not 
+in your standard include path but in /usr/local/include/postgresql/, then what 
+you need to specify is "--with-postgres=/usr/local/include/postgresql".
+
+--with-postgres-lib=<path>
+to indicate the path to PostgreSQL's libpq library.  If, for instance, this
+library is in /usr/local/lib/postgresql, then you need to specify the configure
+option "--with-postgres-lib=/usr/local/lib/postgresql".
+
+Sensible defaults have been provided for Debian, RedHat, and BSD-like systems,
+among others.  If your system requires different settings, please let me know.
+
+
+2. Make
+
+One problem some people run into at this stage is that the header files for
+PostgreSQL need the OpenSSL header files to work.  If this happens to you, make
+sure openssl is installed and try again.
+
+Otherwise, if the "make" part of the build procedure fails, you're probably
+using a different compiler or compiler version than I am.  If your C++ compiler
+is more than a few years old (say, gcc prior to 3.0 or Visual C++ up to 6.0),
+just forget it.  It won't work until you get an up-to-date compiler.
+
+If, on the other hand, you're using a shiny new compiler and you're getting
+errors or warnings, please let me know about them so I can fix them.  
+
+
+3. Make Check
+
+This part is optional.  It is recommended that you do this just to make sure
+that you've got a working library, but there is one Very Important Caveat that 
+could affect your existing data.  See below.
+
+This is where you compile and run the regression test that typically exercises 
+all public methods in the library.  Obviously something or other will have to go
+wrong at this point, right?
+
+Indeed.  The "make check" procedure needs a database to play with.  In this
+database, it will create two tables "pqxxevents" and "pqxxorgevents," as well as
+some tables for its own use.  All have names prefixed with pqxx.  CAUTION: if 
+this database already contains tables with any of these names, either the check
+will fail, or worse, the original data will be erased.
+
+So choose your test database with caution.  Obviously the safest thing to do is
+to set up a separate database for this.
+
+To direct the regression test to the right database, set the following
+environment variables as needed before running "make check" (see description
+above):
+
+	PGDATABASE	(name of database; defaults to your user name)
+	PGHOST		(database server; defaults to local machine)
+	PGPORT		(PostgreSQL port to connect to; default is 5432)
+	PGUSER		(your PostgreSQL user ID; defaults to your login name)
+
+This should get you through the regression test to ensure that everything's
+working properly.  If it isn't, and it's not something you can fix by tweaking
+your PostgreSQL setup, let me know about it and I'll try to fix it.
+
+
+4. Make Install
+
+This is supposed to install the libpqxx library and header files to your
+system.  It took me and many others some time to get this to actually work, so 
+please take care to check that it really does work and that especially the 
+headers are really installed to your system.
+
+The library and headers are installed to a new directory /usr/local/pqxx/ by 
+default, in their respective subdirectories include/ and lib/.  This will 
+probably change in the near future.
+
+Assuming this succeeds, you should now be able to build your own programs by
+adding /usr/local/pqxx/include to your include path, and /usr/local/pqxx/lib to
+your library search path.  See the documentation and the test programs for more
+information on using libpqxx.
+
+One other thing here that may not work is that, if you link with the dynamic
+version of the library, your program may fail to run because the run-time 
+loader cannot find the library.  You can get around this by (i) linking to the
+static version of the library, or (ii) adding a link in /usr/local/lib to the
+dynamic libpqxx library, or (iii) adding libpqxx's lib/ directory to your
+loader's search path before running your program.  This is in decreasing order 
+of preference, so try (i) first, and only resort to (iii) if both (i) and (ii) 
+fail.  On Linux systems, the loader's search path can be extended by setting
+the LD_LIBRARY_PATH variable.
+
+Enjoy!
+
+
+Building on Windows
+
+Project files for Visual C++ are provided.  These are not actively maintained,
+however, so they may need some tweaking.  You'll need at least version 7 of that
+compiler (also called VC.NET), earlier versions being too severely flawed to 
+build serious post-1996 C++ code.  The library is also known to build with 
+Intel's compiler running as a Visual C++ plugin, but the details are beyond me
+since I don't use this platform myself.
+
+Instead of going this route, you may want to try if the Unix build procedure
+works for you instead, e.g. using the Cygwin tools.  If you don't, or it 
+doesn't, you'll need to manually edit the compile-time configuration files 
+include/pqxx/config.h and include/pqxx/libconfig.h to define the features your 
+system, compiler, and PostgreSQL versions support.  Normally the configure 
+script would do this for you; in theory it should be possible to run the 
+configure script with e.g. Visual C++ as your compiler.
+
+If you're using Microsoft's compiler, you may find that some features of the
+library (such as reverse iterators) don't work.  This is because Visual C++ is
+not able to compile all of the library's code, and so the preprocessor was used
+to disable such code if use of this compiler is detected.  Several other 
+workarounds for compiler bugs are automatically switched on for Visual C++, 
+regardless of whether you use the configure script.
+
+Another problem specific to Windows is that it doesn't let you free memory in a
+DLL that was allocated in the main program or in another DLL, or vice versa.  
+This can cause trouble when setting Noticers to process error or warning output;
+which is one reason why recommended practice is to build libpqxx as a static 
+library, not a DLL.  When using Windows you must also take care to set all 
+Noticers from the same context where the Connection is created.
+
+Good luck!
+
+
+Documentation
+
+The best information on programming with libpqxx can be found in the header 
+files themselves, in the include/pqxx/ directory.  Comments and declarations
+from these headers are automatically extracted, using a program called Doxygen,
+to form the HTML reference documentation that can be found in the 
+doc/html/Reference/ directory.  You'll want to start off by reading about the
+connection class and the transaction<> template (which in practice you'll 
+usually want to refer to by the convenience typedef "work"), as well as its 
+base classes.
+
+If you should ever find the generated reference documentation out of date or 
+incomplete, try installing doxygen on your system and running it from the main 
+libpqxx source directory.  All required configuration items are defined in the 
+Doxyfile configuration file in the main directory; nothing more than running the
+doxygen program should be required.
+
+To get a good start in programming libpqxx, however, you may prefer to have some
+introductory explanation and code examples.  The former can be found in the
+tutorial, doc/html/Tutorial which currently is not being actively maintained but
+does cover the basics accurately.  The tutorial is generated from the input
+file doc/libpqxx.sgml at release time.
+
+For some quick examples, take a look at the test programs in the test/ 
+directory.  Particularly test001.cxx should give you a pretty good idea of what
+a minimal libpqxx program can look like.
+
+When reading the test programs, please keep in mind that these do a lot of
+checking and verifying to see that the library works correctly.  This is done
+precisely so that you won't need to do that in your own code.  So don't try to
+imitate all those safety checks when you base your programs on the examples;
+libpqxx encourages a relatively care-free programming style.
+
+
+Programming with libpqxx
+
+Your first program will involve the libpqxx classes connection (see headers
+"pqxx/connection_base" and "pqxx/connection"), work (a typedef for transaction<>
+which conforms to the interface defined in "pqxx/transaction_base"), and 
+probably also result ("pqxx/result").  In a nutshell, you create a "connection"
+based on a Postgres connection string (see below), create a "work" in the 
+context of that connection, and run one or more queries on the work which return
+"result" objects.  The results are containers of rows of data, each of which you
+can treat as an array of strings: one for each field in the row.  It's that 
+simple.
+
+Postgres connection strings state which database server you wish to connect to,
+under which username, using which password, and so on.  Their format defined in
+the documentation for libpq, the C client interface for PostgreSQL.
+Alternatively, these values may be defined by setting certain environment 
+variables as documented in e.g. the manual for psql, the command line interface
+to the database.  Again the definitions are the same for libpqxx-based programs.
+
+The connection strings and variables are not fully and accurately documented 
+here; this document will tell you just enough to get going.  Check the 
+PostgreSQL documentation for authoritative information.   
+
+The connection string consists of attribute=value pairs separated by spaces, 
+e.g. "user=john password=1x2y3z4".  The valid attributes include:
+
+host
+	Name of server to connect to, or the full file path (beginning with a 
+	slash) to a Unix-domain socket on the local machine.  Defaults to 
+	"/tmp".  Equivalent to (but overrides) environment variable PGHOST.
+
+hostaddr
+	IP address of a server to connect to; mutually exclusive with "host".
+
+port
+	Port number at the server host to connect to, or socket file name
+	extension for Unix-domain connections.  Equivalent to (but overrides) 
+	environment variable PGPORT.
+
+dbname
+	Name of the database to connect to.  A single server may host multiple
+	databases.  Defaults to the same name as the current user's name.
+	Equivalent to (but overrides) environment variable PGDATABASE.
+
+user
+	User name to connect under.  This defaults to the name of the current
+	user, although PostgreSQL users are not necessarily the same thing as
+	system users.
+
+requiressl
+	If set to 1, demands an encrypted SSL connection (and fails if no SSL
+	connection can be created).
+
+Settings in the connection strings override the environment variables, which in
+turn override the default, on a variable-by-variable basis.  You only need to
+define those variables that require non-default values.
+
+
+APPENDIX A - Links
+
+Apple MacOS X	http://www.apple.com/macosx/
+BSD		http://www.bsd.org/
+C++		http://www.cs.rpi.edu/~musser/stl-book/
+Cygwin		http://cygwin.com/
+Doxygen		http://www.stack.nl/~dimitri/doxygen/
+gcc		http://gcc.gnu.org/
+Google		http://www.google.com/
+libpq		http://candle.pha.pa.us/main/writings/pgsql/sgml/libpq.html
+libpqxx		http://pqxx.tk/
+		http://gborg.postgresql.org/project/libpqxx/
+Linux		http://www.linux.org/
+OpenSSL		http://www.openssl.org/
+PostgreSQL	http://www.postgresql.org/
+
+APPENDIX B - Projects Using libpqxx
+
+This list is very recent, and not a lot of work has been put into it.  It is
+known that there are many other projects using libpqxx that are not included
+here.  
+
+Since I haven't communicated with the authors in the "Google" list, their 
+inclusion does not imply endorsement.  For all I know, they may be unhappy with
+libpqxx--or perhaps they may have stopped using it by the time you read this!
+But obviously I'll do my best to ensure that this does not happen.  On to the
+list:
+
+As found on Google:
+
+Genea 			http://savannah.nongnu.org/projects/genea/
+Gnucomo			http://www.gnucomo.org/
+KOffice / Kexi		http://www.kexi-project.org/
+MapServer		http://mapserver.gis.umn.edu/
+QHacc			http://qhacc.sourceforge.net/
+Vocal / Mascarpone	http://www.vovida.org/
+
+
+Confirmed by authors:
+
+OKE 			http://www.liacs.nl/home/bsamwel/oke/prerelease-0.10/
+
+
