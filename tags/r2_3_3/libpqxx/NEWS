@@ -1,0 +1,320 @@
+2.2.3
+ - Trigger names no longer need to be proper identifiers
+ - Compile fixes for g++ 3.4.0 and other modern compilers
+ - Tablestreams may specify column lists
+ - Deprecated Quote() in favour of sqlesc(); improved quoting
+ - Fixed generation of libpqxx.spec
+2.2.2
+ - Bugfix in fieldstream w.r.t. reading strings on some systems
+ - Renamed config.h to internalconfig.h to avoid confusion
+ - New connection functions allow client to sleep until notification arrives
+ - Notification functions return number of notifications received
+ - Even fewer client-visible macros exported by libconfig.h
+2.2.1
+ - New, 2.x-style string conversions without locale problem
+ - Documentation improvements
+ - Implemented result::swap()
+2.2.0
+ - Installs to /usr/local by default, NOT to /usr/local/pqxx like before!
+ - Uses Postgres-provided script to find Postgres (thanks Peter Eisentraut)
+ - Which means no more configure arguments required on Irix (thanks Arjen Baart)
+ - Fixes long-standing bug in result class!
+ - New pipeline class for throughput optimization
+ - New field stream class: read result field as C++ stream
+ - Separate namespace pqxx::internal for definitions not relevant to the user
+ - More Windows compilation fixes
+ - SUN Workshop 6 compile fixes and workarounds (thanks Jon Meinecke)
+ - Implemented reverse_iterator for result class
+ - Checks for functional std::reverse_iterator template
+ - Preliminary Makefile for MinGW compiler (thanks Pasquale Fersini)
+ - Changed the way unique<> works
+ - Checks for functional std::count_if()
+ - Bugs fixed & test programs added
+2.1.3
+ - Makefile fixes for Visual C++, thanks Paresh Patel
+ - Library ABI versioning implemented, thanks Roger Leigh
+ - Uses old SQL isolation level syntax for compatibility, thanks koun@sina.com
+ - tablestreams can explicitly complete() before destructor
+ - Bugfix in robusttransaction: forgot to set isolation level
+ - Fixed off-by-ones in tablewriter escape code
+ - tablestreams now use \n-style escape sequences
+ - tablestreams support octal numbers
+ - Freely definable "null" strings in tablestreams, as originally intended
+ - Improved Debian packaging, thanks Roger Leigh
+ - tablestreams use libpq's new-style COPY functions, if available
+ - Extended automation of build/release procedure
+ - tablewriter writes in nonblocking mode to help hide communication latency
+ - Can get backend variables as well as set them
+ - More configuration macro cleanups
+ - Workaround for missing clear() in standard string
+ - Merry Christmas!
+2.1.2
+ - Compile fix for gcc libstdc++ 2.9, thanks Jaroslaw Staniek
+ - Moved deprecated functions below current ones
+ - Cleanups for Debian packaging (thanks Roger Leigh, new Debian maintainer!)
+ - Updated authors listings
+ - Bumped ABI version number for the first time (now 2:0:1)
+2.1.1
+ - More workarounds for gcc 2.95
+ - Automated tools keep test makefiles up to date
+2.1.0
+ - Asynchronous connections
+ - Fixed configure --includedir option (thanks Ray Dassen!)
+ - Compile fixes for SUN Workshop 6, and one for gcc on FreeBSD 4.8
+2.0.0
+ - New stable release!
+ - Includes all changes since 1.5 release.
+ - Workarounds for Microsoft Visual C++ 7 problems.  Thanks Costin Musteata!
+ - No longer need to define PQXX_NO_PARTIAL_CLASS_TEMPLATE_SPECIALISATION
+ - Integrated Windows configuration into regular configuration
+ - Only uses #warning if preprocessor supports it
+ - Works on libpq versions without PQ[un]escapeBytea()
+1.9.9
+ - Minor documentation changes
+1.9.8
+ - Workaround for compile problem with postgres 7.3
+ - Convenience typedef for transaction<>: "work"
+1.9.7
+ - binarystring rewritten and moved to its own file
+ - binarystring::size() does not include terminating null byte!
+ - Implemented escaping of binary strings
+ - Fix in workaround for missing numeric_limits on some compilers
+ - String conversion supported for unsigned char *
+ - More helpful link errors for unsupported string conversions
+ - Complete test coverage
+1.9.6
+ - Fixes in "field table" support
+ - Improved coexistence with client program's config.h, if any
+ - Prefixed autoconf macros used in headers with "PQXX_"
+1.9.5
+ - Header file contents moved to .hxx files for editor filetype recognition
+ - Fixes wrong timestamp for include/pqxx/result in 1.9.4 distribution
+1.9.4
+ - Fixes Visual C++ build problem when compiling as library
+1.9.3
+ - Quick release for various minor changes
+1.9.2
+ - Renamed most public member functions to all-lower-case names
+ - <pqxx/all> (previously <pqxx/all.h> is now called <pqxx/pqxx> 
+1.9.1
+ - tablestream destructor crashed if table didn't exist (thanks Sean [Rogers?])
+ - Renamed all header files to remove ".h" suffix
+ - Tables created by regression test now prefixed with "pqxx" for safety
+ - Large objects now considered stable
+ - Migrated tutorial from SGML to DocBook XML (thanks Wichert Akkerman)
+ - Added tests 57-59
+ - Fixed compile error in largeobject
+ - Updated Windows makefiles
+1.9.0
+ - EVERYTHING HAS CHANGED.  Read the list or run into trouble!
+ - CURSOR HAS INCOMPATIBLE CHANGES AND MAY BE REPLACED COMPLETELY
+ - CACHEDRESULT HAS INCOMPATIBLE CHANGES (won't compile without changes)
+ - REVISE YOUR TRANSACTORS; now templatized on transaction type
+ - Finally got license file in order
+ - Incompatible change in setting transactor quality of service
+ - Cursors require serializable isolation level (checked at link time)
+ - Renamed Connection_base to connection_base, Connection to connection,
+   LazyConnection to lazyconnection
+ - Renamed LargeObject to largeobject, LargeObjectAccess to largeobjectaccess
+ - Renamed Noticer to noticer
+ - Renamed Trigger to trigger
+ - Renamed Result to result, Tuple to tuple, Field to field
+ - Renamed Unique<> to unique<>
+ - Renamed CachedResult to cachedresult
+ - Transformed Transaction Taxonomy (TTT):
+ - Renamed Transaction_base to transaction_base
+ - Renamed Transaction to transaction
+ - Renamed Transactor to transactor<> (now a template)
+ - Implemented transaction isolation levels as compile-time static properties
+ - transaction and robusttransaction now templatized on their isolation levels
+ - cachedresult requires serializable isolation level (checked at link time)
+ - Now need to include pqxx/transactor.h yourself if you need transactors
+ - Large objects require real backend transaction at compile time
+ - New type oid and constant oid_none for row identifiers resp. null oid
+ - Added some forgotten PQXX_LIBEXPORTs
+ - Tweaked documentation in many places
+1.8.1
+ - By popular request: more convenient way to read field values
+ - Documented locale sensitivity of ToString(), FromString(), Field::to()
+1.8.0
+ - Compiles on gcc 2.95 again (heavy streambuf workarounds in largeobject.h)
+ - ConnectionItf renamed to Connection_base, TransactionItf to Transaction_base
+ - connectionitf.h is now connection_base.h, transactionitf.h connection_base.h
+1.7.8
+ - BinaryString class for unescaping bytea strings
+ - PQAlloc template keeps track of libpq-allocated objects
+ - Removed some consts in Unique<>, ConnectionItf, sorry!
+ - Can now set session variables on connections, transactions
+1.7.7
+ - ./configure also looks for postgres in /usr/local/pgsql
+ - test007 now uses SQL_ASCII as its test encoding
+ - integrated Greg Hookey's Debian packaging
+1.7.6
+ - added postgres library (libpq) to dynamic link path
+1.7.5
+ - added test052 - test055
+ - added Result::Tuple::ColumnNumber()
+ - also test setting of client encodings
+ - removed superfluous versions of to_file() from large object classes
+1.7.4
+ - new exception class, sql_error, remembers query text
+ - moved exception classes to new file include/pqxx/except.h
+ - test cases report texts of any failed queries
+ - added tools/rmlo.cxx
+1.7.3
+ - default constructors for connection classes
+ - revamped seeking operations on large objects
+ - better error messages in large objects
+ - added test050, test051
+1.7.2
+ - more workarounds for Sun CC 5.1, thanks Jeroen van Erp!
+ - preliminary support for "named" queries
+ - can now Quote() string constants
+ - included Doxyfile in distribution archive
+ - helps avoid Windows memory allocation problem in DLLs
+ - allows setting of client character set encoding
+1.7.1
+ - regenerated documentation
+1.7.0
+ - removed all deprecated features
+ - connection string documentation in README
+ - separate Connection, LazyConnection classes
+ - made test001 more concise
+ - added test049
+1.6.4
+ - configure script now respects different std namespace
+1.6.3
+ - olostream, lostream now flush themselves before closing
+ - fixed compilation problems when using ToString<>() on a plain char *
+ - compilation fixes for Sun compiler (thanks Jeroen van Erp!)
+ - added .pc file for pkgconfig (thanks Ray Dassen!)
+1.6.2
+ - Debian packaging added to distribution archive
+ - new ilostream, olostream, lostream classes
+1.6.1
+ - large object's cunlink() replaced by remove()
+ - default constructor for LargeObject
+1.6.0
+ - new large objects interface
+ - added test048
+1.5.0
+ - allow result fields to be written to streams
+ - removed confusing CachedResult::clear()
+ - minor documentation updates
+ - added test046, test047
+ - added <pqxx/all.h> convenience header
+1.4.5
+ - fixed crash CachedResult that was less shallow than I thought
+ - fixed quoting problem with adopted SQL cursors
+1.4.4
+ - (forgot to save cursor.cxx with new constructor in 1.4.4, sorry)
+1.4.3
+ - all tests now have three-digit numbers
+ - Cursor can adopt SQL cursor returned by a function
+1.4.2
+ - bugfix in CachedResult when accessing empty Results
+ - minor documentation improvements
+1.4.1
+ - documents new homepage: http://pqxx.tk/
+ - Connection constructor accepts null connect string
+ - Exec() now also takes queries as C++ strings
+1.4.0
+ - Connection::IsOpen() renamed to is_open()
+ - NoticeProcessor replaced by Noticer (with C++ linkage)
+1.3.7:
+ - detects nasty rare problem case with Cursors in unknown positions
+1.3.6:
+ - fixed detection of missing PQescapeString().  Thanks David Wright!
+v1.3.5:
+ - documented Windows build procedure
+ - fixed problem with upper-case letters in cursor names.  Thanks key88!
+2003-01-19 16:00, v1.3.4:
+ - support long double type
+ - clarified some error messages
+2003-01-08 18:45, v1.3.3:
+ - fix missing include in test13
+2003-01-07 02:30, v1.3.2:
+ - configure looks for postgres includes/library in more places, thanks Ray!
+2003-01-02 23:00, v1.3.1:
+ - bugfix in Cursor positioning
+2003-01-02 20:30, v1.3.0:
+ - absolute positioning for Cursor
+ - better documentation on cursors
+ - reduced, but improved test suite output
+2002-12-23 17:30, v1.2.8:
+ - Cursor::Move() returns number of rows skipped
+ - new typedef Cursor::size_type
+2002-12-14 23:30, v1.2.7:
+ - test suite now distinguishes expected errors from unexpected ones
+2002-12-09 20:00, v1.2.6:
+ - fixed some Cursor test cases for change in postgres 7.3
+ - added important warning to Cursor
+2002-12-09 02:00, v1.2.5:
+ - added important warning to CachedResult
+2002-12-08 14:14, v1.2.4:
+ - fixed compile error on some systems in include/pqxx/util.h
+2002-12-04 12:00, v1.2.3:
+ - workaround for broken <sys/select.h> on some systems
+ - fixed Quote() bug
+2002-12-03 01:30, v1.2.2:
+ - fixed serious CachedResult bug
+ - added test41
+2002-12-02 17:00, v1.2.1:
+ - hopefully fixed cursor bug with PostgreSQL 7.3
+2002-12-01 22:00, v1.2.0:
+ - new CachedResult class
+2002-11-07 13:15, v1.1.4:
+ - workaround for missing InvalidOid definition
+2002-10-23 16:00, v1.1.3:
+ - Cursor & TableStream hierarchy now work on any transaction type
+ - get no. of affected rows & oid of inserted row from Result
+ - increased test coverage
+2002-10-21 01:30, v1.1.2:
+ - updated build procedure
+ - Debian packaging improvements
+2002-09-25 03:00, v1.1.1:
+ - supports activating/deactivating of connections
+ - various Connection getters now activate deferred connection first
+2002-09-23 01:00, v1.1.0:
+ - supports lazy connections (added 19 test cases just for these)
+ - greatly reduced performance overhead for RobustTransaction 
+ - removed id field from RobustTransaction's transaction log tables
+2002-09-14 20:00, v1.0.1:
+ - now lives on GBorg
+ - various packaging updates
+2002-06-12 17:30, v0.5.1:
+ - no longer have to destroy one transaction before creating the next
+2002-06-07 17:15, v0.5.0:
+ - "make install" now finally installs headers!
+ - distribution now includes SGML (DocBook) version of tutorial
+2002-06-04 15:00, v0.4.4:
+ - may now have multiple triggers with same name on single connection
+2002-06-02 23:00, v0.4.3:
+ - fixed TableReader problem with \t and \n
+2002-06-01 21:00, v0.4.2:
+ - hopefully fixes compile problem with broken std::iterator
+ - configure no longer requires --with-postgres-include=/usr/include/postgresql
+2002-05-29 22:00, v0.4.1:
+ - can now also handle bool, unsigned char, short field types
+2002-05-27 22:30, v0.4.0:
+ - RENAMED Transactor::TRANSACTIONTYPE to argument_type for STL conformance
+ - RENAMED Result::Field::name() to Name()
+ - documentation improvements
+ - minor optimizations
+2002-05-18 00:00, v0.3.1:
+ - removed broken postgres_fe.h dependency (hopefully permanent fix)
+2002-05-12 22:45, v0.3.0:
+ - also looks for postgres_fe.h in postgres' internal/ directory (tmp fix)
+2002-05-05 01:30, v0.2.3: 
+ - extensive build instructions in README
+ - make check now controlled through PG environment variables
+2002-05-04 19:30, v0.2.2: 
+ - more STL conformance
+ - fixed regression test
+ - test6 now copies "orgevents" to "events" by default
+2002-04-28 23:45 Version bumped to 0.2
+2002-04-28 23:45 Self-generated distribution archive
+2002-04-27 14:20 Replaced automake symlinks with actual files
+2002-04-07 02:30 Released with configure script
+2002-03-29 01:15 Not yet released.  Still integrating autogen stuff...
+

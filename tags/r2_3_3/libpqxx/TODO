@@ -1,0 +1,69 @@
+Build system
+(*) Completely support building outside the source directory
+(*) Auto-generate up-to-date versions of MinGW makefile
+(*) Ensure there is a way to build without -rpath and use that for the
+    Debian packaging.
+
+Connections
+(*) Separate failed_connection exception type if connection never succeeds?
+(*) Connection pooling support
+(*) Support scoped/unscoped non-superuser identity (outside transaction only)
+(*) libpqxx-level trace output
+
+Containers
+(*) size_type must be unsigned, difference_type must be signed
+(*) Ought to have at least const_reference
+(*) Implement ==, !=, swap(); {<,>,<=,>=}
+(*) size_type max_size()
+(*) Iterator copying (copyconstructor or assignment) must not throw
+(*) front() & back()
+
+Cursors
+(*) Provide iterator interface
+(*) Investigate WITH HOLD feature (nontransaction cursors)
+(*) In PostgreSQL 7.4, MOVE and FETCH are much improved (PQcmdTuples()!)
+
+Exceptions
+(*) Strip newlines from PostgreSQL error messages in exceptions?
+(*) Document exception guarantees (weak / strong / poorly defined / pure)
+(*) Harden pipeline
+
+Large Objects
+(*) Support lo_tell()
+(*) Check for handling of nul characters
+
+Results
+(*) Rewrite field conversions to be locale-independent
+(*) Convert to/from date/time values
+(*) Splice out an interface definition
+(*) Real encoding support (PQmblen(), PQenv2encoding())
+(*) Check for handling of nul characters
+(*) Support PQftablecol()
+(*) Conceive metadata model
+(*) Allow direct mapping onto structs, using member ptr template args
+
+Streams
+(*) Test tablewriter column lists
+(*) Permit column list test failures on pre-7.3 postgres backends
+(*) Provide metadata information in tablestream
+(*) Can we have a tablestream that looks more like a result?
+(*) Create "inserter" class for column lists
+(*) Allow single-level insertion with endt/endr manipulators
+(*) Streambuffer class?
+
+Tests
+(*) Test NaN support!
+
+Transactions
+(*) German's locking idea for robusttransaction
+(*) [pgsql 7.5] Try to use two-phase commit if appropriate
+(*) [pgsql 7.5] Create log table "WITH OIDS" if appropriate
+(*) [pgsql 7.5] Support two-phase commit with separate transaction class(es)
+(*) [pgsql 7.5] Support nested transactions
+(*) [pgsql 7.5] See if transactions are still aborted on error
+(*) User schema support for robusttransaction log table
+(*) Support SET CONSTRAINTS (no-op for nontransaction).  Make DEFER scoped?
+(*) Support constraints definition
+
+Util
+(*) Only report closing of non-open sessionfocus during explicit close, not dtor
