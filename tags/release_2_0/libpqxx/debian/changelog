@@ -1,0 +1,26 @@
+libpqxx (2.0.0-1) stable; urgency=low
+
+  * [debian/control, debian/rules] Use chrpath to get rid of RPATH in the
+    shared library.
+
+ -- J.H.M. Dassen (Ray) <jdassen@debian.org>  Fri, 17 Oct 2003 16:00:37 +0200
+
+libpqxx (1.9.6-1) unstable; urgency=low
+
+  * Source changes
+
+ -- Jeroen T. Vermeulen <jtv@xs4all.nl>  Fri, 24 Oct 2003 21:10:00 +0200
+
+libpqxx (1.7.6-1) unstable; urgency=low
+
+  * Example packaging to be used with libpqxx development version
+    1.7.6. 
+
+ -- Greg Hookey <g@deadly.ca>  Sun, 27 Apr 2003 16:08:01 -0700
+
+libpqxx (1.5.1-1) unstable; urgency=low
+
+  * Initial Release. (closes: #170932) 
+
+ -- Greg Hookey <debian@deadly.ca>  Sat, 22 Mar 2003 16:00:10 -0800
+
