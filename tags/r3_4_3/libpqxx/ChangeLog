@@ -1,0 +1,2611 @@
+2005-02-07  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ config/sample-headers/compiler/SunStudio-8/config-internal-compiler.h,
+ config/sample-headers/compiler/SunStudio-8/config-public-compiler.h:
+  - Added, thanks Mark Round
+ include/pqxx/transactor.hxx:
+  - Fixed incorrect comment, thanks Joshua Moore-Oliva
+ src/pipeline.cxx:
+  - Worked around last SunC++ problem, thanks Mark Round
+  - Removed unneeded header
+2005-02-04  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh:
+  - Fixed typo in automake check
+  - Used "which" so $PATH is respected (thanks Pawel Niewiadomski)
+ include/pqxx/cachedresult.h, include/pqxx/cursor.h:
+  - error_permitted_isolation_level() is no longer a template
+  - no longer needs incorrect workarounds for Visual C++ and old Sun compilers
+ include/pqxx/compiler.h, include/pqxx/libcompiler.h:
+  - Moved Visual C++ NOMINMAX fix to libcompiler.h
+  - Retired workarounds for problematic error_permitted_isolation_level()
+2005-02-03  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ pqxx-config.in:
+  - Fixed painful typo in help output, thanks Tommi Maekitalo
+2005-02-02  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection_base.hxx:
+  - Fixed broken workaround for SunC++ problem, thanks again Mark Round
+ src/pipeline.cxx:
+  - Added missing include
+  - Should fix that last remaining SunC++ error
+2005-02-01  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/compiler.h:
+  - Check if evil min() and max() aren't defined already, thanks Bart Samwel!
+ src/pipeline.cxx:
+  - More fixes for SunC++
+  - One error with SunC++ remains (std::distance() won't work)
+2005-01-31  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/cachedresult.cxx, src/cursor.cxx:
+  - Fixes for SunC++, thanks Mark Round
+2005-01-28  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/compiler.h:
+  - Finally defined NOMINMAX, thanks Trevor Morgan!
+  - Should solve large object test failures on Windows
+2005-01-25  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+  - Workaround for BSD grep which doesn't support "-f -"
+2005-01-20  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cursor.h:
+  - Fixed typo in Sun compiler workaround, thanks Mark Round
+2004-12-23  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/util.hxx:
+  - Apply PQXX_LIBEXPORT to sleep_seconds(), thanks Chris Piker
+2004-12-22  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ test/test000.cxx:
+  - Added min()/max() workaround, thanks Chris Piker
+2004-11-23  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/dbtransaction.hxx, src/dbtransaction.cxx:
+  - Added out-of-line destructor so Visual C++ knows where to put vtable
+2004-11-17  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ tools/maketestvcmak.pl:
+  - Removed some unneeded (presumably) libraries
+2004-11-15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cursor.hxx, include/pqxx.pipeline.hxx:
+  - Made inclusion of <limits> conditional on PQXX_HAVE_LIMITS
+  - Fall back on INT_MAX/INT_MIN workaround if no <limits> available
+ include/pqxx/result.hxx:
+  - Remove assignment, comparison between reverse and regular iterators
+  - Fixes problems with g++ 2.95
+ src/util.cxx:
+  - Include <unistd.h> if available
+  - Make uses of locale conditional on PQXX_HAVE_LOCALE
+ test/test058.cxx:
+  - Removed unused largeobject variable
+2004-11-13  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ config/sample-headers/compiler/VisualC++.NET-2003/config-internal.compiler.h,
+ config/sample-headers/libpq/7.4/config-internal-libpq.h,
+ config/sample-headers/libpq/7.4/config-public-libpq.h:
+  - Fixed PQXX_SELECT_ACCEPTS_NULL
+  - Disabled PQXX_HAVE_SLEEP
+  - Enabled PQXX_HAVE_PQEXECPREPARED
+  - Thanks Patrick Kimber
+ include/pqx/connection.hxx:
+  - Call PQconnectdb() inside PQXXPQ namespace, thanks Patrick Kimber
+ include/pqxx/result.hxx:
+  - Workarounds for Visual C++.NET 2003, thanks Patrick Kimber
+ win32/common:
+  - Enabled STD definition, thanks Patrick Kimber
+2004-11-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/transactor.hxx:
+  - Renamed OnCommit/OnAbort/OnDoubt to on_commit/on_abort/on_doubt
+  - Anonymized unused (but significant) OnAbort() parameter to silence warning
+ src/transaction_base.cxx:
+  - Check for broken connection before going into commit attempt
+2004-11-09  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ - doc/Makefile.am:
+  - Filter progress messages out of doxygen output
+ - include/pqxx/*.hxx:
+  - Retouched Doxygen documentation
+  - Removed unneeded includes
+ - include/pqxx/dbtransaction.hxx:
+  - Removed startcommand() and StartCmd()
+  - Un-inlined code
+ - include/pqxx/util.hxx, src/pipeline.cxx, src/cursor.cxx:
+  - Removed assert code
+ - src/dbtransaction.cxx:
+  - New
+ - src/Makefile.am:
+  - Added dbtransaction.cxx
+2004-11-08  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ config/sample-headers/compiler/*/*, configitems:
+  - Add PQXX_HAVE_LONG_DOUBLE
+ configure.ac.in:
+  - Check for "long double" support (it's a standard type, but...)
+  - Add -Wno-long-double in maintainer mode, if available
+ include/pqxx/util.hxx, src/util.cxx, test/test046.cxx, test/test074.cxx:
+  - Made references to "long double" conditional on compiler support
+2004-11-07  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ config/sample-headers/VisualC++.NET-2003/config-internal-compiler.h,
+ config/sample-headers/VisualC++.NET-2003/config-internal-compiler.h:
+  - New.  Thanks Patrick Kimber!
+ include/pqxx/connection.hxx:
+  - Added missing "inline" for Windows case.  Thanks Michael J. Pedersen
+ README, win32/INSTALL.txt:
+  - Documented sample-headers
+  - Documented object-file-style linking (as opposed to -lpqxx argument)
+2004-11-04  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+  - Check for PG_DIAG_STATEMENT_POSITION as well as PQresultErrorField()
+  - Add <cstring> include for select() check; needed for OS X w/gcc-3.3
+2004-11-03  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ config/sample-headers:
+  - New
+  - For distributing sample configuration headers
+ configure.ac.in:
+  - Replace autoconf's function checks with -Werror-proof code
+ include/pqxx/cursor.hxx, src/cursor.cxx:
+  - Took out a lot of inlining
+  - Added </<=/>/>= operators to icursor_iterator
+  - Full test coverage
+ include/pqxx/Makefile.am:
+  - Reinstated compiler.h as a distributed (but not installed) file
+  - Reinstated config-internal-autotools.h as distributed (but not installed)
+ include/pqxx/result.hxx, src/result.hxx:
+  - Took out a lot of inlining
+ test/test081.cxx:
+  - Test stride()
+ test/test084.cxx:
+  - Licked icursor_iterator problems (most bugs were in test program :)
+  - Test </<=/>/>= operators
+ tools/preprelease:
+  - Fixed symbols listing; used to cut off function before second argument
+2004-11-01  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/util.hxx, src/util.cxx:
+  - Lots more work on icursor_iterator but still not quite right
+ test/test084.cxx:
+  - Removed some illegal tricks
+2004-10-31  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/util.cxx:
+  - Set stringstream in to_string fallback code to C locale
+2004-10-31  Roger Leigh <rleigh@debian.org>
+ debian/control.in:
+  - postgresql-dev depends on pkg-config
+ debian/rules:
+  - Remove all examples that include internal headers
+2004-10-30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cursor.hxx, src/cursor.cxx:
+  - Warning: icursor_iterator constructors may now throw execptions
+  - Made icursorstream keep track of its iterators
+  - icursor_iterators no longer read data unless really needed
+  - Made icursorstream/icursor_iterator "lazy," skipping over unread data
+  - Fixed icursor_iterator equality comparison
+  - Allow for generic icursor_iterator comparison, not just for end-of-stream
+  - icursor_iterators should no longer get confused when mixing operations
+2004-10-28  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection.hxx:
+  - Nothrow specs on destructors (Windows only).  Thanks reina_ga@hotmail 
+ include/pqxx/result.hxx, test/test075.cxx, test/test082.cxx:
+  - Full test coverage
+ include/pqxx/cursor.hxx:
+  - icursor_iterator::operator+= now thinks in strides, like operator++ etc.
+  - Fixed icursor_iterator comparison operators
+  - Fixed icursor_iterator freshness bookkeeping
+  - Removed m_pos from icursor_iterator
+  - Made icursor_iterator constructor taking istream_type explicit
+  - Added adopted-cursor feature
+  - Documented use with nontransactions and WITH HOLD
+  - No longer marked experimental
+  - Full test coverage
+ src/util.cxx:
+  - Missing <windows.h> include, thanks Stephan Schuetz
+ test/test000.cxx:
+  - Test signedness of cursor_base's prior() and backward_all()
+ test/test084.cxx:
+  - New
+  - Test adopted cursor
+  - Test icursor_iterator
+ tools/makevcmak.pl:
+  - Fixed typo, thanks Stephan Schuetz
+2004-10-26  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/binarystring.cxx:
+  - Fixed swap(): forgot to call superclass swap()
+2004-10-25  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.hxx:
+  - Use home-grown reverse_iterators
+  - Fixes "returning reference-to-temporary" problem in operator*()
+ src/result.cxx:
+  - Working on field comparison.  Nulls are not trivial!
+ test/test082.cxx
+  - No longer requires PQXX_HAVE_REVERSE_ITERATOR
+  - Verifies reverse_iterator traversal with regular traversal
+2004-10-21  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/binarystring.hxx, src/binarystring.cxx, test/test062.cxx:
+  - Full test coverage
+  - Comparison operators ==, !=
+ include/pqxx/result.hxx, src/result.cxx, test/test002.cxx, test/test007.cxx:
+  - Removed tentative <, <=, >, >= operators
+  - Full test coverage
+  - Use new reference counting from internal::PQAlloc
+ include/pqxx/util.hxx:
+  - PQAlloc now reference-counted (doubly-linked smart pointers, actually)
+  - Specialized free function for PGresult
+2004-10-16  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+  - Fixed "cut" problem.  Again
+ include/pqxx/binarystring.hxx, include/pqxx/result.hxx:
+  - Gave begin(), end(), size() and capacity() empty throw specifications
+  - Defined const_reference
+  - Implemented front(), back(), and swap()
+2004-10-15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/Makefile.am:
+  - Don't install compiler.h--thanks Roger Leigh
+2004-10-14  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configitems, configure.ac.in, include/pqxx/binarystring.hxx,
+ include/pqxx/libcompiler.h:
+  - Removed ptrdiff_t check and workaround
+  - Replaced use of ptrdiff_t with long
+  - Fixes problem with autoconf ptrdiff_t check
+  - Compile with -Werror in maintainer mode
+ doc/libpqxx.xml:
+  - Replaced "transaction<>" introduction with "work"
+  - Hinted at field iteration
+  - unique is internal now
+  - Test programs are numbered from zero now
+  - Fixed split infinitives
+  - Re-justified some text to 80 columns
+ include/pqxx/cachedresult.h, include/pqxx/cursor.h, include/pqxx/cursor.hxx,
+ include/pqxx/result.hxx, src/cachedresult.cxx, src/cursor.cxx,
+ include/pqxx/tablewriter.hxx:
+  - Empty throw specifications for iterator constructors and assignments
+ include/pqxx/pqxx:
+  - Added "pqxx/cursor"
+  - Fixed filename description (still called itself "pqxx/all")
+ include/pqxx/result.hxx, include/cachedresult.hxx, include/cursor.h,
+ include/cursor.hxx, src/oldcursor.cxx, src/result.cxx:
+  - Turned size_type into unsigned types
+  - Introduced difference_type where necessary
+  - Added int versions of at() and operator[] etc. to avoid ambiguity for 0
+  - Empty throw specifications for iterator constructors and assignments
+ include/pqxx/util.h:
+  - Only warn once about deprecated headers
+ src/cachedresult.cxx, src/oldcursor.cxx, test/test003.cxx:
+  - Silence warning about deprecated headers
+ src/result.cxx:
+  - Fixed broken check for PQresultErrorField()
+ src/util.cxx:
+  - Included <cerrno>
+ test/test019.cxx, test022.cxx, test/test038.cxx, test/test040.cxx,
+ test/test041.cxx, test/test042.cxx, test/test043.cxx, test/test045.cxx,
+ test/test049.cxx:
+  - Fixed signed/unsigned comparisons etc. caused by new unsigned size_type
+  - Changed size_type to difference_type where needed
+  - Some casts around formerly mismatched comparisons now unnecessary
+2004-10-13  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.hxx, test/test082.cxx:
+  - Full test coverage for field iterators
+  - Lifted iterator classes' num() functions into tuple / field
+ include/pqxx/tablewriter.hxx:
+  - Full test coverage for tablewriter back_insert_iterator
+ include/pqxx/util.hxx, test/test000.cxx:
+  - Full test coverage for items<>
+ test/test083.cxx:
+  - New
+  - Tests tablewriter back_insert_iterator
+2004-10-12  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxxx/result.hxx:
+  - Replaced private inheritance of field from tuple by membership
+  - Yet Another Field Conversion Function: result::field::operator>>
+ test/test007.cxx:
+  - Test result::field::operator>>
+ test/test082.cxx:
+  - New
+  - Test field iterators
+2004-09-28  Roger Leigh  <rleigh@debian.org>
+ include/pqxx/Makefile.am:
+  - Don't install generated private config-*.h headers.
+2004-09-18  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configitems, configure.ac.in:
+  - Added PQXX_HAVE_SLEEP for POSIX sleep() (internal/compiler)
+ include/pqxx/util.hxx, src/util.cxx, test/test004.cxx, test/test023.cxx:
+  - New sleep_seconds() to hide POSIX sleep() / Windows Sleep() / select()
+ include/pqxx/robusttransaction.hxx, src/robusttransaction.cxx:
+  - Add m_backendpid field
+  - Wait until old backend dies, or query is finished (thanks Tom Lane)
+2004-09-02  Roger Leigh  <rleigh@debian.org>
+ configure.ac.in:
+  - Put the configitems in an AC_CONFIG_COMMANDS macro, so that they
+    are generated by config.status
+  - Source configitems from ${srcdir}, so that VPATH builds with
+    separate source and build trees work
+ tools/Makefile.am:
+  - Distribute makemingwmak.pl and makevcmake.pl
+ debian:
+  - Add chrpath to build dependencies to strip rpath from binaries
+  - Depend on at least version 7.4.2-1 of postgresql for binary
+    compatibility reasons.
+  - Don't package tests which make use of internal headers as
+    examples.
+2004-08-22  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+  - Moved "cut" field option before filename, thanks Ralf Engelschall
+2004-08-21  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection.hxx, include/pqxx/connection_base.hxx,
+ src/connection.cxx, src/connection_base.cxx:
+  - Delegated overridables to nonvirtuals to avoid calls from ctors/dtors
+  - Inlined lots of trivial or near-trivial functions
+  - Made connection_base::Connection() private
+  - completeconnect() doesn't need to check for success
+  - connection_base::halfconnect() didn't always SetupState()
+  - Moved dropconnect() out of close() because it's called from destructor
+ include/pqxx/cursor.hxx, test/test081.cxx:
+  - Increased test coverage
+ include/pqxx/transaction_base.hxx, test/test009.cxx:
+  - Test coverage for stringstream version of exec()
+ include/pqxx/util.hxx, test/test080.cxx:
+  - Warning for items<> interface not being stable yet
+  - Increased test coverage for items<>
+ src/cursor.cxx:
+  - Removed "NO SCROLL," which older backends don't support
+2004-08-17  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ README:
+  - Minor updates to appendices
+ win32/INSTALL.txt:
+  - MinGW documentation.  Thanks Michael J. Pedersen!
+2004-08-16  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh:
+  - Generates MinGW Makefile
+ src/connection_base.cxx:
+  - activate() also when don't have PQexecPrepared()
+ tools/Makefile.am:
+  - Removed pqxxbench
+ tools/makemingwmak.pl:
+  - New
+  - Generates win32/MinGW.mak
+ tools/pqxxbench.cxx, tools/pqxxbench.in:
+  - Deleted
+2004-08-13  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/result.cxx:
+  - Workaround for missing PQresultErrorField(), thanks webmaster@tsukaeru.net
+2004-08-12  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configitems:
+  - Added PQXX_PQ_IN_NAMESPACE (under "compiler" for now)
+ configure.ac.in:
+  - Added several warning options
+ include/pqxx/connection.hxx, src/connection.cxx:
+  - New nullconnection class for testing
+ include/pqxx/connection_base.hxx, src/connection_base.cxx:
+  - Updated activate()/deactivate() documentation to lower-case API
+  - Made Status() throw ()
+  - Made ErrMsg() throw ()
+  - Qualified libpq functions with PQXXPQ::
+ include/pqxx/result.hxx, src/result.cxx:
+  - Removed initialize()'s empty throw specification
+  - Qualified libpq functions with PQXXPQ::
+ include/pqxx/robusttransaction.hxx, include/pqxx/transaction.hxx:
+  - Separate single-arg and "named" constructors instead of default arg
+ include/pqxx/util.hxx, src/util.cxx:
+  - Removed namedclass::description()'s empty throw specification
+  - Separate namespace for libpq is optional
+ src/connection_base.cxx:
+  - Forgot to read result after removing trigger
+  - No longer list open triggers when closing connection
+  - Extra checks for connection being open
+ src/pipeline.cxx:
+  - Qualified libpq functions with PQXXPQ::
+ test/test000.cxx:
+  - Add nullconnection checks
+ test/test005.cxx, test/test013.cxx, test/test018.cxx, test/test032.cxx,
+ test/test037.cxx, test/test040.cxx, test/test041.cxx, test/test056.cxx,
+ test/test070.cxx, test/test072.cxx, test/test073.cxx:
+  - Send "expected" messages to cout instead of cerr
+2004-08-10  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh: 
+  - Check for PQexecPrepared()
+ configitems:
+  - Added PQXX_HAVE_PQEXECPREPARED
+ src/connection_base.cxx:
+  - Workaround for missing PQexecPrepared()
+2004-08-09  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh:
+  - Made automake version checks a loop
+  - Check for automake-1.9
+2004-08-08  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ README:
+  - Documented Debian package and Arjen Baart's RPM packages
+  - Rewrote config stuff, referring to win32/INSTALL.txt
+ win32/INSTALL.txt:
+  - Took configuration header details out of the step-by-step list for brevity
+  - Removed documentation about Visual C++ makefile being out of date
+  - Documented new configuration system
+2004-08-06  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh:
+  - Reinstated autoheader
+ configitems:
+  - New
+  - Lists configuration items and where they should go
+ configure.ac.in:
+  - Generate only include/pqxx/config.h with automake
+  - Generate partitioned config headers based on configitems
+ include/pqxx/config-internal-autotools.h,
+ include/pqxx/config-internal-compiler.h,
+ include/pqxx/config-internal-libpq.h, include/pqxx/config-public-compiler.h,
+ include/pqxx/config-public-libpq.h, include/pqxx/config.h,
+ include/pqxx/config.h.in:
+  - New
+  - Automatically generated by configure script
+  - Partition configuration items by public/private, and determining factor 
+ include/pqxx/Makefile.am:
+  - Added config.h
+  - Added new partitioned config headers
+ include/pqxx/compiler.h, include/pqxx/libcompiler.h, include/pqxx/util.hxx,
+ test/test049.cxx:
+  - Use partitioned config headers
+ include/pqxx/internalconfig.h, include/pqxx/libconfig.h:
+  - Removed
+ Makefile.am:
+  - Added configitems to distribution
+2004-08-05  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+  - Removed InvalidOid check
+  - Removed <iterator> check
+ include/pqxx/connection_base.hxx, src/connection_base.cxx:
+  - Moved libpq into pqxx::internal::pq namespace
+  - Removed unused status code argument to MakeEmpty()
+ include/pqxx/largeobject.hxx, include/pqxx/transaction_base.hxx,
+ include/pqxx/util.hxx, src/binarystring.cxx, src/largeobject.cxx,
+ src/pipeline.cxx, src/result.cxx, src/util.cxx:
+  - Moved libpq into pqxx::internal::pq namespace
+ include/pqxx/result.hxx:
+  - Replaced InvalidOid with oid_none
+  - Moved libpq into pqxx::internal::pq namespace
+ tools/rmlo.cxx:
+  - Replaced Oid with oid
+2004-08-01  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ tools/makevcmake.pl:
+  - New
+  - Generates win32/libpqxx.mak
+ tools/autogen.sh:
+  - Call makevcmake.pl
+ win32/libpqxx.cxx:
+  - Removed unused crud (basically everything) generated by VC++
+ win32/libpqxx.mak:
+  - Automatically generated
+2004-07-31  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/libcompiler.h:
+  - Disabled (inaccurately worded) Visual C++ warning "this" use in result.hxx
+ win32/INSTALL.txt:
+  - Lots new documentation
+  - Changed config.h to internalconfig.h
+ win32/libpqxx.mak:
+  - Added oldcursor.obj.  Thanks Alexandre Hanft.
+2004-07-23  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cursor.hxx:
+  - Corrected icursor_iterator copy comparison (required for input_iterator)
+  - Updated documentation
+ include/pqxx/tablewriter.hxx:
+  - Added copy assignment operator to disambiguate templated version
+  - Marked iterator functions not explicitly tested
+2004-07-06  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/binarystring.cxx, src/connection_base.cxx:
+  - Better error reporting for some hard-to-tell cases
+2004-07-05  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection_base.hxx, include/pqxx/connection.hxx:
+  - References to README for connection string documentation
+ README:
+  - Minor changes to connection string documentation
+2004-07-01  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/pipeline.hxx, src/pipeline.cxx:
+  - Removed debug code inserted while debugging new version
+ src/util.cxx:
+  - from_string() didn't accept LONG_MIN, thanks Yannick Boivin!
+  - Removed assertions
+ test/test000.cxx:
+  - Added test cases for largest and smallest long values
+2004-06-27  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/nontransaction.cxx, src/robusttransaction.cxx:
+  - Removed unsafe query retries
+2004-06-21  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/pipeline.hxx, src/pipeline.cxx:
+  - Made m_issuedrange a pair of iterators
+  - Many related changes
+2004-06-20  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/pipeline.cxx:
+  - Removed disaster-handling code for exceptions in result constructor
+2004-06-20  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.hxx, src/result.cxx:
+  - Changed garbage collection mechanism to double circular linked lists
+  - Wrapping a PGresult * in a result object is now exception-free!
+  - No more heap allocations when constructing
+2004-06-19  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection_base.hxx, include/pqxx/transaction_base.hxx:
+  - Wrap PQconsumeInput() and PQisBusy()
+ include/pqxx/cursor.hxx:
+  - Replaced _WIN32 conditionals with more appropriate _MSC_VER
+ include/pqxx/pipeline.hxx, src/pipeline.cxx:
+  - Excruciating 26-hour complete rewrite!
+  - Much better exception safety
+  - New pipeline stays registered throughout its lifetime, for now
+  - No longer supports is_running()
+  - retain() sets maximum number of queries to retain before trying to issue
+ test/test071.cxx:
+  - New retain() calls
+  - No longer looks at is_running()
+2004-06-17  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/util.hxx:
+  - Declared from_string() for char an ambiguous conversion (thanks Lee Sam)
+2004-06-17  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+  - Added -funit-at-a-time for g++ 3.4
+ doc/libpqxx.html:
+  - Replaced Exec() with exec()
+  - Replaced Perform() with perform()
+  - Replaced Commit() with commit()
+  - Replaced Quote() with sqlesc()
+  - Replaced Cursor with icursorstream
+  - Replaced ToString()/FromString() with resp. to_string()/from_string()
+  - Removed FmtString()
+  - Introduced sql_error
+  - Expanded namespace explanation a little
+ include/pqxx/connection_base.hxx, include/pqxx/tablewriter.hxx,
+ include/pqxx/transaction_base.hxx, src/connection_base.cxx,
+ src/tablewriter.cxx, src/transaction_base.cxx:
+  - Removed async buffering code from tablewriter, thanks Rico Schiekel
+ include/pqxx/cursor.hxx:
+  - Documentation
+  - Added test tags to function declarations
+  - Added += operator to iterator
+2004-06-15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cursor.hxx, src/cursor.cxx:
+  - Rewrote forward-only cursor as a stream
+  - Iterator interface for forward-only cursor through an "istream_iterator"
+ README:
+  - LD_LIBRARY_PATH should be valid on all Unix-like systems
+ test/test081.cxx:
+  - New
+2004-06-07  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pxx/cursor, include/pqxx/cursor.hxx:
+  - New
+  - Early work on new iterator/container-style cursor interface
+ include/pqxx/cursor.h:
+  - Renamed guard macro to PQXX_OLD_CURSOR_H
+ include/pqxx/Makefile.am:
+  - Added new cursor, cursor.hxx
+ src/cursor.cxx:
+  - Now contains new-style cursor code
+ src/oldcursor.cxx:
+  - New
+  - Holds obsolete Cursor code
+2004-06-06  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/util.hxx, test/test000.cxx:
+  - string conversions for std::stringstream
+ test/test005.cxx, test/test006.cxx:
+  - Added rows ending in empty-string fields, thanks slava@perlx.com
+2004-06-03  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/transaction_base.hxx:
+  - Removed erroneous "throw ()" for EndCopyWrite(), thanks Simon Elbaz
+  - Experimental version of exec() taking a stringstream
+ src/connection_base.cxx:
+  - Trimmed some fat, possible bug out of EndCopyWrite()
+ src/result.cxx:
+  - Accepts null query string
+ src/tablestream.cxx:
+  - Made base_close() idempotent, or at least more obviously so
+2004-05-23  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in, include/pqxx/result.hxx, src/util.cxx:
+  - Workarounds for the infamous non-release "gcc 2.96", thanks Arjen Baart
+ libpqxx.spec.in:
+  - Added --enable-shared (Arjen Baart)
+2004-05-20  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/connection_base.cxx:
+  - Strip newlines off COPY TO STDOUT lines in old-libpq code
+ src/tablereader.cxx:
+  - Fix parse error when line ends in empty field.  Thanks slava@perlx.com!
+2004-05-19  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/pipeline.hxx, src/pipeline.cxx:
+  - Made prepended "SELECT 0" query explicit to pave way for partial retrieval
+  - Syntax error reporting tries to narrow down problematic query
+ include/pqxx/tablestream.hxx:
+  - Made columnlist() use new separated_list()
+ include/pqxx/util.hxx:
+  - New class template items<> to make container initialization easy
+  - separated_list() generates comma/semicolon/...-separated lists
+ src/transaction_base.cxx:
+  - No longer go async in BeginCopyWrite()
+ test/test008.cxx, test/test010.cxx:
+  - Use separated_list() instead of output loop
+ test/test010.cxx, test/test080.cxx:
+  - Use items<> instead of hand-filling containers
+2004-05-17  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.hxx, src/result.cxx:
+  - Added errorposition()
+ README:
+  - Added KPoGre to list of libpqxx-based projects
+2004-05-13  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/all.h:
+  - Added transactionitf.h, thanks Bart Samwel
+  - Which doesn't mean that these files aren't still deprecated, of course...
+2004-05-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/tablewriter.hxx:
+  - Complete test coverage
+ include/pqxx/util.hxx, src/robusttransaction.cxx, src/util.cxx, test/test018.cxx,
+ test/test045.cxx:
+  - Added sqlesc() functions
+  - Deprecated Quote() functions
+ src/connection_base.cxx:
+  - Removed unnecessary PGSTD:: scope qualifiers
+  - Added some missing quotes in LISTEN/UNLISTEN statements
+ src/connection.cxx, src/largeobject.cxx:
+  - Removed unnecessary PGSTD:: scope qualifiers
+ src/util.cxx:
+  - When escaping, check for isprint rather than isgraph
+  - Escape single quote to double single quote, as per SQL
+ test/test000.cxx:
+  - New
+  - Should succeed even if there is no database to connect to
+ test/test009.cxx:
+  - Renamed test table to have standard "pqxx" prefix
+  - Test tablewriter's column specifiers
+ test/test004.cxx, test/test078.cxx:
+  - Properly quoted trigger names
+2004-05-10  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+  - Should generate libpqxx.spec now, thanks Arjen Baart
+2004-05-08  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ tools/preprelease:
+  - Fixed nm line (tried to list dynamic symbols in static library!)
+2004-05-06  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+  - Added gcc 3.4's -Wextra, which replaces -W
+2004-05-04  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/transaction_base.cxx:
+  - Fixed syntax error in COPY column specifications
+ test/test080: 
+  - Can't compare a const_reverse_iterator to rend() if container non-const :( 
+  - Works now!
+2004-05-01  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/largeobject.hxx:
+  - g++-3.4.0 fixes (for any compiler, really).  Thanks Michael Krelin!
+ include/pqxx/tablereader.hxx, include/pqxx/tablestream.hxx,
+ include/pqxx/tablewriter.hxx, include/pqxx/transaction_base.hxx,
+ src/transaction_base.cxx:
+  - Column list specification support for tablestreams
+ test/test068.cxx:
+  - Corrected typo in comment
+ test/test080.cxx:
+  - New
+  - Tests column list specifications for tablereader
+2004-04-27  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/connection_base.cxx:
+  - Accept double-quoted trigger names, thanks slava@perlx.com
+ test/test078.cxx:
+  - Test with unusual trigger name, as intended
+2004-04-27  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection_base.hxx, src/connection_base.cxx:
+  - Notification-related functions return number of notifications received
+  - New await_notification() functions sleep until notification arrives
+ test/test004.cxx, test/test023.cxx:
+  - Check get_notifs() return value
+ test/test078.cxx:
+  - New
+  - Tests await_notification()
+ test/test079.cxx:
+  - New
+  - Tests await_notification(long,long)
+2004-04-16  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ test/test004.cxx:
+  - Added #include <ctime>, just in case
+2004-04-15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/trigger.hxx:
+  - Added missing include, thanks slava@perlx.com
+2004-04-14  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/libcompiler.h:
+  - Enable standard I/O streams library on Compaq C++ compiler
+ include/pqxx/result.hxx:
+  - Include ios.  Thanks Fahad Gilani.
+2004-04-13  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in, include/pqxx/Makefile.am:
+  - Renamed config.h.in to internalconfig.h.in
+ include/pqxx/compiler.h:
+  - Renamed config.h to internalconfig.h to avoid confusion
+ include/pqxx/config.h.in:
+  - Deleted
+ include/pqxx/internalconfig.h.in:
+  - New
+ include/pqxx/libconfig.h.in:
+  - Removed some macros not used in library headers
+ test/test045.cxx:
+  - Quelled compiler warning
+ test/test049.cxx:
+  - Include internalconfig.h instead of libconfig.h
+2004-04-05  Roger Leigh <rleigh@debian.org>
+ tools/Makefile.am:
+  - Add $(top_builddir)/include to INCLUDES.
+2004-04-03  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection.hxx, include/pqxx/connection_base.hxx:
+  - Made dropconnect() throw ()
+2004-03-22  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/util.cxx:
+  - Added missing include <locale>, thanks darx@darxi.purk.ee
+2004-03-20  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.hxx:
+  - Replaced field_streambuf::underflow()
+  - May fix problems with various compilers when reading strings from fields
+2004-03-21  Roger Leigh <rleigh@debian.org>
+ test/Makefile.am, tools/maketestam.pl
+  - Correct includes and libs search paths.
+  - VPATH builds now work.
+ tools/Makefile.am
+  - Don't try to install pqxxbench and rmlo.
+2004-03-18  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/libconfig.h.in, include/pqxx/util.hxx, src/util.cxx:
+  - Moved PQfreemem() and PQfreeNotify() calls out of header
+  - Moved PQXX_HAVE_PQFREEMEM and PQXX_HAVE_PQFREENOTIFY out of header
+  - Moved PQXX_HAVE_PQFREE* out of libconfig.h
+ include/pqxx/result.hxx:
+  - to_string() and from_string() templates for result::field
+ include/pqxx/util.hxx, test/test*.cxx:
+  - Test coverage for from_string() functions
+  - Test coverage for to_string() functions
+ test/test076.cxx:
+  - New
+  - Completes test coverage for from_string() and to_string()
+ test/test077.cxx:
+  - New
+  - Tests result::swap()
+2004-03-14  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/pipeline.hxx:
+  - Included compiler.h instead of libcompiler.h, thanks Markus Bertheau
+2004-03-12  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/pqxx:
+  - Included pqxx/result (though not really needed)
+ include/pqxx/result.hxx, src/result.cxx:
+  - Added swap()
+ README:
+  - Documented link command line for Unix-style compilers
+  - Documented difference between "foo" and "foo.hxx" headers
+2004-03-07  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/largeobject.hxx, include/pqxx/result.hxx,
+ include/pqxx/tablewriter.hxx, src/binarystring.cxx, src/connection_base.cxx,
+ src/cursor.cxx, src/largeobject.cxx, src/pipeline.cxx, src/result.cxx,
+ src/robusttransaction.cxx, test/test*.cxx:
+  - Replaced ToString() calls with to_string() (and same for FromString etc)
+2004-03-06  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/util.hxx, src/util.cxx:
+  - Implemented to_string() functions to replace ToString()
+ tools/Makefile.am
+  - rmlo and pqxxbench still built, but not installed; thanks Markus Bertheau
+2004-03-04  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cachedresult.h, include/pqxx/cursor.h:
+  - Added "@deprecated" doxygen tag to classes
+ include/pqxx/result.hxx, include/pqxx/util.hxx, src/util.cxx:
+  - New template from_string<>() (stricter, faster, no locale problem)
+  - Deprecated FromString<>()
+2004-02-28  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ README, win32/INSTALL.txt:
+  - Documented the need to edit win32/common
+ tools/rmlo.cxx:
+  - Ported to 2.x API (thanks GB Clark)
+2004-02-26  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh, configure.ac.in:
+  - Fixes for using config/m4 directory (Patrick Welche)
+2004-02-25  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ .cvsignore:
+  - Added configure.lineno (Patrick Welche)
+ autogen.sh:
+  - Made aclocal work with config/m4 instead of . (Patrick Welche)
+ doc/libpqxx.xml:
+  - Typos fixed (Patrick Welche)
+2004-02-23  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/largeobject.cxx: 
+  - Fixed risk of incorrect errno 
+2004-02-19  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ test/test075.cxx:
+  - g++ 2.95 compile fix
+ tools/maketestam.pl:
+  - Removed redundant -I option
+ tools/Makefile.am:
+  - Added pqxxbench
+  - Added rmlo
+ tools/pqxxbench.cxx, tools/pqxxbench.in:
+  - New
+2004-02-18  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ test/test049.cxx:
+  - Make count_if() compile on Sun CC (thanks Jon Meinecke)
+2004-02-16  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh, configure.ac.in:
+  - Patrick Welche patch: make libtoolize "copy over the necessary .m4 files
+  into ., then aclocal looks in . and adds them to aclocal.m4, and everything
+  is happy."
+  - Patrick Welche cont'd: "Didn't need to remove RANLIB, but as you require a
+  reasonably new autoconf, int won't hurt..)"
+  - Moved m4 stuff into config/m4, thanks Patrick Welche
+ include/pqxx/cachedresult.h, include/pqxx/cursor.h:
+  - Workaround for Sun CC compile problem (thanks Jon Meinecke)
+2004-02-13  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.hxx:
+  - Back to full test coverage
+ test/test071.cxx:
+  - Made reverse_iterator part conditional on PQXX_HAVE_REVERSE_ITERATOR
+ test/test075.cxx:
+  - New
+  - Tests reverse result iteration (including rbegin() and rend())
+ win32/libpqxx.mak:
+  - Added winsock32 library to link options (thanks Fred Moyer)
+2004-02-12  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/config.h.in:
+  - Removed redundant definitions
+ src/connection_base.cxx:
+  - Made unistd.h include conditional (thanks Fred Moyer)
+2004-02-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/isolation.hxx:
+  - Removed unused implemented() functions
+ include/pqxx/libcompiler.h:
+  - Trying PQXX_TYPENAME workaround for SUN compiler...
+ test/test046.cxx, test/test049.cxx, test/test074.cxx:
+  - Compile fixes, thanks Greg Webber!
+2004-02-10  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/libcompiler.h:
+  - Fixed SUN compiler version check (thanks Jon Meinecke, Greg Webber)
+2004-02-09  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+  - Check for functional count_if() (Jon Meinecke)
+  - Several AC_TRY_COMPILE checks fixed
+  - Stay in C++ mode, less Fortran stuff etc. in configure
+ include/pqxx/connection_base.hxx, include/pqxx/libcompiler.h:
+  - Workaround for Sun CC default argument problem (thanks Jon Meinecke)
+ include/pqxx/largeobject.hxx
+  - Workaround for Sun CC namespace lookup problem (Jon Meinecke)
+ include/pqxx/largeobject.hxx, include/pqxx/result.hxx, src/largeobject.cxx,
+ src/result.cxx:
+  - Added some throw () where appropriate
+ include/pqxx/result.hxx:
+  - Fixed long-standing bug in LoseRef() - thanks Jon Meinecke!
+ pqxx-config.in:
+  - Added missing -L in --libs option (Arjen Baart)
+ test/test049.cxx:
+  - count_if() workaround (thanks Jon Meinecke)
+ win32/libpqxx.mak:
+  - Added pipeline
+2004-02-06  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/libcompiler.h:
+  - Set up for SUN Workshop workaround
+2004-02-05  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cursor.h:
+  - Workaround for SUN Workshop 6 (thanks Jon Meinecke)
+ include/pqxx/pipeline.hxx, src/pipeline.cxx:
+  - Typedef-wrapped container types to reduce std::pair<> trouble
+  - Should fix SUN Workshop problems (thanks Jon Meinecke)
+2004-02-03  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in, include/pqxx/binarystring.hxx, include/pqxx/libcompiler.h,
+ include/pqxx/libconfig.h.in, include/pqxx/result.hxx, test/test062.cxx:
+  - Added check for functional reverse_iterator template
+  - Skip reverse_iterator typedefs & functions if template not available
+  - VC7 workaround implies no functional reverse_iterator template
+2004-02-02  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/libcompiler.h:
+  - Documented PGSTD
+ include/pqxx/result.hxx:
+  - Added reverse_iterator
+ include/util.hxx:
+  - Documented pqxx::internal so that Doxygen picks it up
+ README-UPGRADE:
+  - Documented 2.2.0 changes
+ src/cachedresult.cxx:
+  - SUN Workshop compiler fix, thanks Jon Meinecke
+2004-01-30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection_base.hxx, src/connection_base.cxx:
+  - Documented exception guarantees
+  - Added throw () here or there
+  - Made process_notice() throw ()
+  - More work on process_notice() robustness
+2004-01-29  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection_base.hxx, src/connection_base.cxx:
+  - process_notice() can handle messages without the trailing newline
+2004-01-28  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+  - Added lost patch from Arjen to generate pqxx-config
+ include/pqxx/result.hxx:
+  - Added reverse_iterator support
+2004-01-26  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+  - Changed default installation prefix to /usr/local, thanks Arjen Baart!
+ Makefile.am:
+  - Added bin_SCRIPTS (patch by Arjen Baart)
+ pqxx-config.in:
+  - New (Arjen Baart)
+  - Similar to PostgreSQL pg_config script for configuration parameters
+2004-01-25  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection_base.hxx, include/pqxx/transaction_base.hxx,
+ include/pqxx/util.hxx, src/connection_base.cxx, src/transaction_base.cxx,
+ src/util.cxx:
+  - Split namedclass base class out of transactionfocus 
+  - Added description() to easily construct a full name for a namedclass
+  - Moved unique<> to internal namespace
+  - Made unique<> assume its guest is a namedclass
+  - Simplified error message generation using namedclass
+  - Rewrote unique<> error checking
+ include/pqxx/pipeline.hxx, include/pqxx/tablereader.hxx,
+ include/pqxx/tablestream.hxx, include/pqxx/tablewriter.hxx,
+ include/pqxx/transaction_base.hxx, src/pipeline.cxx, src/tablereader.cxx,
+ src/tablestream.cxx, src/tablewriter.cxx, src/transaction_base.cxx:
+  - Finally introduced transactionfocus class
+  - Reworked Classname() system
+2004-01-24  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.hxx:
+  - Created fieldstream
+ include/pqxx/util.hxx:
+  - Added PQXX_LIBEXPORT where needed, thanks david@firepro.co.za.
+ test/test074.cxx:
+  - New
+  - Tests fieldstream
+2004-01-22  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/*.hxx:
+  - Introduced "internal" namespace
+  - Changed "test1" in comment to "test001"
+  - Made all destructors throw () (and inspected them to verify this)
+2004-01-19  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/pipeline.hxx, src/pipeline.cxx, test/test072.cxx:
+  - Pipeline refuses to (re-)issue queries behind a failure
+ src/pipeline.cxx:
+  - Implemented Bart's trick
+  - In nontransactions, manages to pinpoint queries causing syntax errors
+ test/test073.txt:
+  - New
+2004-01-14  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+  - Added warning about auto-generation of configure.ac
+  - Peter Eistentraut's patch for finding postgres headers & libraries
+ README:
+  - No longer need --with-postgres etc. (thanks Peter!)
+ TODO:
+  - Bart Samwel found great solution for pipeline's one major weakness
+ win32/Makefile.am:
+  - Added MinGW.mak to distribution
+ win32/MinGW.mak:
+  - New.  Thanks Pasquale Fersini!
+2004-01-13  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/pipeline.hxx:
+  - Warning about syntax errors
+ src/pipeline.cxx:
+  - Better handling of awkward error situations
+ src/util.cxx:
+  - Fixed bool conversion (missing break), thanks Roger Leigh!
+ test/test072.cxx:
+  - Tests runtime error rather than SQL syntax error
+  - Succeeds now
+2004-01-12  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/pipeline.hxx:
+  - Full test coverage
+  - Added retain() and resume()
+  - Better error message when retrieving result for unknown query
+ src/connection_base.cxx:
+  - Fix: combination of asyncconnection/nontransaction/pipeline didn't connect
+ test/test069.cxx, test/test070.cxx, test/test071.cxx, test/test072.cxx:
+  - New
+  - Test pipeline class
+2004-01-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh:
+  - Check for automake 1.8
+ README, win32/README:
+  - Minor updates wrt Windows-specific material
+2004-01-02  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in, include/pqxx/util.h:
+  - Re-included std::string.clear() check which had been lost
+  - Replaced #pragma warning with #pragma message, thanks key88sf@hotmail.com
+ README:
+  - Documented manual editing of configuration headers
+ include/connection_base.hxx, src/connection_base.cxx:
+  - Changed Windows workarounds for select(), thanks key88sf@hotmail.com
+ src/cursor.cxx:
+  - Workaround for min()/max() problem in Windows, thanks key88sf@hotmail.com
+ test/test004.cxx, test/test023.cxx:
+  - Updated Windows vs. select() workarounds
+2003-12-29  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/pipeline.cxx:
+  - Compiles
+2003-12-28  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/except.hxx:
+  - Empty throw specification for sql_error::query() 
+ include/pqxx/largeobject.hxx, src/largeobject.cxx:
+  - Empty throw specification for largeobjectaccess::close()
+ include/pqxx/pipeline, include/pqxx/pipeline.hxx, src/pipeline.cxx:
+  - New
+ include/pqxx/result.hxx, include/pqxx/transaction_base.hxx:
+  - Prototyped facilities for pipeline
+2003-12-25  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh:
+  - No longer runs autoheader, which would overwrite config.h.in
+ configure.ac, include/pqxx/config.h.in, include/pqxx/libconfig.h.in:
+  - Renamed some more HAVE_... macros to PQXX_HAVE
+  - Removed some unnecessary macros
+  - Workaround for missing clear() in standard string
+ src/connection_base.cxx:
+  - Fixed broken tablewriter for pre-7.4 postgres--thanks Roger Leigh!
+2003-12-24  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection_base.hxx:
+  - Made async argument to WriteCopyLine() default to false
+ src/transaction_base.cxx:
+  - Fixed some double spaces in error strings
+2003-12-23  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ debian/*:
+  - Applied Debian patches by Roger Leigh
+ include/pqxx/result.hxx:
+  - More general implementation of operator<<(), thanks Hubert-Jan Schaminee!
+2003-11-28  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh:
+  - Removed obsolete ABI versioning
+ configure.ac.in:
+  - Now sets PQXXVERSION
+ src/Makefile.am:
+  - Implemented "-release" ABI versioning.  Thanks Roger Leigh!
+ tools/preprelease:
+  - Fixed nm invocation used to generate library symbols
+ win32/libpqxx.mak:
+  - Fixed some wrapped lines.  Thanks Paresh Patel!
+  - Fixed some carriage return/line feed problems (Paresh Patel)
+2003-11-26  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection_base.hxx, src/connection_base.cxx:
+  - Removed "OnReconnect" parameter from Exec()
+  - Moved EndCopy() into old versions of line-read & end-write functions
+  - Support for async (nonblocking) mode
+  - Factored out & optimized select() code
+ include/pqxx/result.hxx, src/result.cxx:
+  - Split StatusError() out of CheckStatus()
+  - Added CheckStatus() version taking const char[]
+ include/pqxx/tablereader.hxx, src/tablereader.cxx:
+  - Moved field parsing out of the header, into new function extract_field()
+  - Rewrote field parsing
+ include/pqxx/tablewriter.hxx, src/tablewriter.cxx:
+  - Do writes in async mode
+  - Buffer up to 1 pending line (could support more in the future)
+ include/pqxx/transaction_base.hxx:
+  - COPY queries no longer delegated to connection_base
+  - COPY now treated as regular query; follows transaction's retry policy
+  - EndCopy() no longer needed
+ win32/INSTALL.txt
+  - Replaced part about copying config.h by part about editing it
+ win32/libpqxx.mak
+  - Fixed some apparently wrapped lines!
+2003-11-25  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/dbtransaction.hxx:
+  - Use old-style isolation level syntax, thanks koun@sina.com!
+  - "Start command" no longer starts transaction; only sets isolation level
+  - Isolation level only set if not the default
+  - New function start_backend_transaction()
+ include/pqxx/dbtransaction.hxx, include/pqxx/robusttransaction.hxx,
+ include/pqxx/transaction.hxx, src/robusttransaction.cxx, src/transaction.cxx:
+  - Factored out identical implementations of do_exec()
+ include/pqxx/transaction_base.hxx, src/transaction_base.cxx:
+  - Removed OnRetry parameter from DirectExec()
+  - Made Retries parameter for DirectExec() default to the safe choice of 0
+ src/robusttransaction.cxx:
+  - Forgot to set isolation level!
+  - Use start_backend_transaction()
+ src/transaction.cxx:
+  - Use start_backend_transaction()
+2003-11-23  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in, include/pqxx/tablereader.hxx, include/pqxx/tablewriter.hxx,
+ src/tablereader.cxx, src/tablewriter.cxx:
+  - Got tablestreams to work with the new functions
+ include/pqxx/except.h:
+  - Made single-argument constructor of sql_error explicit
+2003-11-22  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/tablereader.hxx, include/pqxx/tablewriter.hxx,
+ src/tablereader.cxx, src/tablewriter.cxx:
+  - Now allow user-settable null string, as intended
+  - Major cleanups and optimizations
+  - Some probable off-by-one errors in escaping fixed
+ test/test005.cxx:
+  - Added double-tab combination to test set to test subsequent escapes
+2003-11-21  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh:
+  - Reads version numbers from VERSION
+  - Generates configure.ac
+ configure.ac:
+  - Bumped abi revision for first time
+  - Disabled check for new COPY interface for now (doesn't work yet)
+  - Now generated by autogen.sh
+ configure.ac.in:
+  - New
+  - Used to generate configure.ac with appropriate version numbers
+ doc/html/CVS, doc/html/Reference/CVS, doc/html/Tutorial/CVS:
+  - Removed
+ include/pqxx/libconfig.h.in:
+  - Check for PQputCopyData() and friends
+ include/pqxx/connection_base.hxx, include/pqxx/result.hxx,
+ include/pqxx/tablereader.hxx, include/pqxx/transaction_base.hxx,
+ include/pqxx/trigger.hxx:
+  - Moved all deprecated functions to bottom of public class sections
+ include/pqxx/connection_base.hxx, src/connection_base.cxx:
+  - Use new COPY interface, if available
+ include/pqxx/tablereader.hxx:
+  - Support escaping of carriage returns
+ include/pqxx/tablereader.hxx, include/pqxx/tablestream.hxx,
+ include/pqxx/tablewriter.hxx, src/tablereader.cxx, src/tablestream.cxx,
+ src/tablewriter.cxx:
+  - New complete() function to check for errors before constructor
+ include/pqxx/tablestream.hxx, include/pqxx/transaction_base.hxx, 
+ src/tablestream.cxx, src/transaction_base.cxx:
+  - Added "pending" errors facility for tablereaders
+ Makefile.am:
+  - Remove doc/CVS from distribution archive if present
+ src/connection_base.cxx, src/result.cxx, src/robusttransaction.cxx,
+ src/transaction_base.cxx:
+  - Rewrote "Internal libpqxx" error messages to "libpqxx internal error"
+ src/connection_base.cxx:
+  - For old COPY interface, increase line buffer to 10000 chars
+  - Added lots of error checking
+ src/tablewriter.cxx:
+  - Delegated EndCopyWrite() to transaction
+ tools/preprelease:
+  - Create HTML documentation directories, and make sure they're empty
+  - Check for up-to-date debian/changelog and NEWS
+ VERSION:
+  - New
+  - Feeds version numbers into auto-generation process
+2003-11-15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/largeobject.hxx, src/binarystring.cxx, src/util.cxx:
+  - Included <new>.  Thanks Jaroslaw Staniek!
+2003-11-15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/binarystring.hxx:
+  - Use PQAlloc's content_type
+ include/pqxx/libcompiler.h:
+  - "Broken iterator" workaround includes cstdlib for size_t
+  - "Broken iterator" workaround includes cstddef for ptrdiff_t
+  - char_traits workaround also typedefs char_type
+  - Added char_traits workaround for unsigned char
+  - Added workaround for missing ptrdiff_t
+  - Thanks Adam Pigg for making me persist in resolving this!
+ include/pqxx/util.hxx:
+  - PQAlloc typedefs content_type
+2003-11-14  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh:
+  - Invokes maketestam.pl before running automake
+  - Invokes maketestvcmak.pl
+ README:
+  - Kexi project confirmed by Adam Pigg
+ tools/maketestam.pl
+  - New
+  - Generates test/Makefile.am
+  - Generates win32/
+ test/Makefile.am
+  - Now automatically generated by tools/maketestam.pl
+ win32/test.mak:
+  - Now automatically generated by tools/maketestvcmak.pl
+2003-11-13  J.H.M. Dassen (Ray) <jdassen@debian.org>
+ include/pqxx/Makefile.am: follow --includedir value.
+2003-11-03  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac, include/pqxx/compiler.h, include/pqxx/config.h.in:
+  - Removed abs(long) workaround
+ include/pqxx/cachedresult.h:
+  - Removed const from CacheMap for SUN Workshop, thanks jluu@cdcixis-cm.com
+ include/pqxx/connection.h:
+  - Complete test coverage for asyncconnection
+ src/cursor.cxx:
+  - Replaced abs(long) by labs(long) (jluu@cdcixis-cm.com)
+ test/test065.cxx:
+  - Test asyncconnection's std::string constructor
+2003-11-02  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/libconfig.h.in:
+  - PQXX_HAVE_PQESCAPESTRING no longer visible during client compilation
+ include/pqxx/util.hxx:
+  - Moved some code to new util.cxx source file
+ src/util.cxx:
+  - New
+  - Stricter input check on conversion to bool
+ test/test064.cxx, test/test065.cxx, test/test066.cxx, test/test067.cxx, 
+ test/068.cxx:
+  - New
+  - Test asyncconnection
+ win32/libpqxx.mak:
+  - Added util.cxx/util.obj
+ win32/test.mak:
+  - Added new tests starting with number 60
+2003-11-01  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Added check for #pragma warning("...")
+  - See if select() accepts NULL fd_set arguments
+ include/pqxx/config.h.in, include/pqxx/libconfig.h.in:
+  - Moved <sys/select.h> check to public configuration file
+ include/pqxx/connection.hxx, include/pqxx/connection_base.hxx:
+  - New overridables startconnect(), completeconnect(), dropconnect()
+  - New class asyncconnection
+  - Getters/setters only require a PQconn, not a working connection
+  - Made is_open() more strict
+  - New function halfconnect(): ensure just that there is a valid PQconn
+ include/pqxx/util.h:
+  - Issue #pragma warning if #warning not available
+ src/connection.cxx, src/connection_base.cxx:
+  - Connect() while already connected is no longer an error
+  - New class asyncconnection
+ test/test001.cxx:
+  - Check for nonempty result
+ test/test004.cxx, test/test023.cxx:
+  - No longer include <pqxx/compiler.h>
+ test/test058.cxx:
+  - Quenched some comparison sign warnings
+ test/test063.cxx
+  - New
+  - Tests asyncconnection
+2003-10-30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac, include/pqxx/config.h.in:
+  - Check for PQescapeBytea() and PQunescapeBytea() (thanks Costin Musteata)
+ Doxyfile:
+  - Removed obsolete doxygen parameters
+ src/binarystring.cxx:
+  - Workarounds for missing PQescapeBytea() / PQunescapeBytea()
+  - Removed reference to namespace std (should be PGSTD)
+ test/test004.cxx, test/test023.cxx:
+  - Made Sleep() revert to WIN32 version on Windows (thanks Costin)
+ README:
+  - Added related links
+  - Added more libpqxx-using projects
+2003-10-29  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Checks for preprocessor #warning support
+ include/pqxx/binarystring.hxx:
+  - Exclude reverse iterator definitions on Visual C++, thanks Costin!
+ include/pqxx/compiler.h:
+  - Defines PQXX_LIBEXPORT if compiling library as Windows DLL
+ include/pqxx/cursor.hxx:
+  - Exclude some required typename keywords on Visual C++ (Costin)
+  - error_permitted_isolation_level() workaround for Visual C++ (Costin)
+ include/pqxx/libcompiler.h:
+  - Included Windows workaround definitions here
+ include/pqxx/libconfig.h.in:
+  - Added PQXX_HAVE_CPP_WARNING, set better default for PGSTD
+ include/pqxx/util.h:
+  - Fixed flaw in inclusion of new-style util header
+ include/pqxx/util.hxx:
+  - Includes libcompiler.h
+ README:
+  - Revamped Windows section
+  - PQXX_NO_PARTIAL_CLASS_TEMPLATE_SPECIALISATION no longer needed!
+  - Updated programming introduction
+ src/*.cxx:
+  - All now include pqxx/compiler.h at the top (Costin)
+ src/robusttransaction.cxx:
+  - Made unused catch argument anonymous to silence warning (Costin)
+ win32/config.h:
+  - Removed
+2003-10-13  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.hxx:
+  - to() now throws domain_error if conversion fails (thanks Rune Jortveit)
+  - New as() without argument; throws if null
+  - Throw specifications for at() and operator[] where appropriate
+ include/pqxx/transaction.hxx
+  - Introduced "work" typedef for default transaction type
+ test/test045.cxx:
+  - Test new zero-argument result::field::as()
+ test/test0??.cxx:
+  - Replaced "transaction<>" by new typedef "work"
+2003-10-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/binarystring.cxx:
+  - Workaround for missing const in Bytea escape functions in postgres 7.3
+2003-10-05  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/binarystring.hxx, src/binarystring.cxx:
+  - New
+  - Reworked binarystring, now more std::string-like
+ include/pqxx/result.hxx:
+  - Moved binarystring into its own set of files
+2003-10-04  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection_base.hxx:
+  - Test coverage for set_variable()
+ include/pqxx/result.hxx, src/result.cxx:
+  - binarystring::size() doesn't include terminating zero!
+  - Test coverage for binarystring
+  - Added escape_binary() functions
+ include/pqxx/transaction_base.hxx:
+  - Test coverage for set_variable()
+ include/pqxx/util.hxx:
+  - String conversions with unsigned char * now supported
+ test/test060.cxx, test/test061.cxx, test/test062.cxx:
+  - New
+2003-10-03  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/util.hxx:
+  - More helpful link error for unsupported string conversions
+2003-09-23  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cursor.h, src/cursor.cxx:
+  - Moved ALL() and BACKWARD_ALL() to cursor.cxx so they can use config.h.
+2003-09-22  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac, include/pqxx/*, test/test*.cxx:
+  - Renamed configure macros used in header files
+  - New libcompiler.h/libconfig.h for inclusion in headers
+  - compiler.h/config.h only needed when compiling library
+ include/pqxx/libcompiler.h, include/pqxx/libconfig.h:
+  - New
+ README:
+  - Renamed NO_PARTIAL_CLASS_TEMPLATE_SPECIALISATION
+2003-09-22  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.hxx:
+  - Some PGSTD::string & parameters should have been const
+ test/test002.cxx
+  - Fixed some mistakes in testing PQftable support
+2003-09-20  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/*:
+  - Moved header contents to .hxx files for filetype recognition
+2003-09-18  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result:
+  - Replaced two obsolete calls to Column() by column()
+  - Test coverage for column type / column name functions
+2003-09-01  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Added check for PQfreeNotify()
+  - Check for using-declaration overloading problem in gcc 2.95.3
+ include/pqxx/largeobject:
+  - Workaround for using-declaration overloading problem
+ include/pqxx/util:
+  - Use PQfreeNotify() if available and appropriate
+  - Added <cctype> include
+2003-07-18  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result:
+  - Added support for PQftable().  Thanks Adam Pigg!
+  - Deprecated tuple::Row() in favour of row_number()
+2003-07-13  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/all:
+  - Replaced with include/pqxx/pqxx to fix automake problem
+ include/pqxx/*, src/*.cxx, test/test*.cxx:
+  - Deprecated lots of functions with upper-case letters in names
+  - Made old functions available if old-style headers are included
+2003-06-23  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ doc/libpqxx.sgml:
+  - Replaced by libpqxx.xml
+ doc/libpqxx.xml:
+  - New.  Thanks Wichert Akkerman!
+ DoxyFile:
+  - Added new header files
+ include/pqxx/connection_base, include/pqxx/transaction_base,
+ src/tablestream.cxx:
+  - Fix crash closing tablestream on nonexistant table (thx Sean [Rogers?])
+ include/pqxx/except:
+  - Moved exception classes back into pqxx namespace where they belong
+2003-06-14  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/*.h:
+  - Deprecated; new headers have names not ending in ".h"
+  - All backwards compatibility support restricted to old headers
+2003-06-14  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/largeobject.h:
+  - Fixed compile error in a basic_ilostream() constructor
+  - Complete test coverage
+ include/pqxx/result.h:
+  - Updated test coverage; only binarystring remains to be done
+ test/test057.cxx, test/test058.cxx, test/test059.cxx:
+  - New
+ win32/libpqxx.mak:
+  - Added dbtransaction
+ win32/test.mak:
+  - Added tests 21 through 59
+  - Added leading zeroes to all test names
+2003-06-08  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.h:
+  - Deprecated ColumnNumber() and ColumnName()
+  - New column_number() and column_name() throw on error
+  - Replaced some std:: with PGSTD::
+2003-06-07  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ test/test*.cxx:
+  - Prefixed test table names (events and orgevents) with "pqxx"
+2003-06-07  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ README:
+  - Started list of projects using libpqxx
+ include/pqxx/cursor.h:
+  - Workaround for MetroWerks 8.3
+2003-06-05  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ COPYING:
+  - Finally written out
+ README-UPGRADE:
+  - New
+ include/pqxx/largeobject.h, include/pqxx/result.h, 
+ include/pqxx/tablewriter.h:
+  - Added some forgotten PQXX_LIBEXPORTs
+ include/pqxx/tablereader.h:
+  - Renamed TableReader to tablereader
+ include/pqxx/tablestream.h:
+  - Renamed TableStream to tablestream
+ include/pqxx/tablewriter.h:
+  - Renamed TableWriter to tablewriter
+ include/*.h, src/*.cxx:
+  - Added reference to COPYING
+2003-06-05  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cachedresult.h:
+  - Renamed CachedResult to cachedresult
+  - Renamed Tuple to tuple
+ include/pqxx/result.h:
+  - Renamed Result to result
+  - Renamed Tuple to tuple
+  - Renamed Field to field
+ include/pqxx/trigger.h:
+  - Renamed Trigger to trigger
+2003-06-03  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cachedresult.h:
+  - Independently checks for correct isolation level
+  - Made constructor private
+  - Improved documentation
+ include/pqxx/connection_base.h:
+  - Renamed Noticer to noticer
+  - Derived noticer from std::unary_function
+ include/pqxx/connection.h:
+  - Renamed Connection to connection
+  - Renamed LazyConnection to connection
+  - Improved documentation
+ include/pqxx/dbtransaction.h:
+  - Made constructor private
+ include/pqxx/largeobject.h:
+  - Renamed LargeObject to largeobject
+  - Renamed LargeObjectAccess to largeobjectaccess
+  - Gave largeobjectaccess an off_type and pos_type
+  - Improved documentation
+ include/pqxx/result.h:
+  - Renamed BinaryString to binarystring
+ include/pqxx/transaction_base.h:
+  - Made constructor private
+ include/pqxx/util.h:
+  - Added oid and oid_none
+ include/pqxx/*.h:
+  - Fixed some includes
+2003-05-26  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cachedresult.h, src/cachedresult.cxx:
+  - Templatized, inlined constructor to provide Cursor's with isolation level
+ include/pqxx/cursor.h, src/cursor.cxx:
+  - Requires serializable isolation level at link time
+  - Shuffled constructor around to implement isolation level requirement
+ include/pqxx/dbtransaction.h:
+  - New
+ include/pqxx/isolation.h:
+  - New
+ include/pqxx/largeobject.h, src/largeobject.cxx:
+  - Requires dbtransaction, not merely a transaction_base
+ include/pqxx/robusttransaction.h:
+  - Removed unnecessary and wrong "BEGIN WORK" retry string (harmless though)
+  - Just reports serializable as its isolation level for now
+  - Is now derived from dbtransaction
+ include/pqxx/transaction_base.h:
+  - Reports committed_read as its isolation level
+ include/pqxx/transaction.h:
+  - Reports serializable as its isolation level
+  - Is now derived from dbtransaction
+ include/pqxx/transactor.h:
+  - Templatized on transaction class
+  - Now derived from std::unary_function
+ include/*, src/*:
+  - Renamed Connection_base to connection_base
+  - Renamed Transaction_base to transaction_base 
+ tools/preprelease:
+  - Rewrote output generation
+2003-05-23  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.h
+  - Added Field::as() by popular request
+  - Documented annoying locale sensitivity of Field::to()
+ include/pqxx/util.h
+  - Documented annoying locale sensitivity of ToString()/FromString()
+2003-05-13  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/util.h:
+  - Fixed wrong argument type for PQfreemem() on systems that have it
+  - Fixed missing export directive on Unique
+2003-05-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ test/test056.cxx:
+  - New
+ win32/libpqxx.mak:
+  - Fixed apparent whitespace problem, thanks key88sf
+2003-05-10  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac, include/pqxx/largeobject.h, test/test051.cxx, test/test052.cxx,
+ test/test053.cxx, test/test055.cxx:
+  - Got large object support to compile with gcc 2.95
+ include/pqxx/*.h, src/*.cxx, test/test*.cxx:
+  - Renamed ConnectionItf to Connection_base, similar for TransactionItf
+2003-05-05  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac, include/pqxx/compiler.h:
+  - Workaround for gcc 2.95: missing std::char_traits
+ configure.ac, include/pqxx/largeobject.h:
+  - Workaround for gcc 2.95: missing <streambuf>
+ include/pqxx/largeobject.h:
+  - Workaround for gcc 2.95: missing std::ios_base
+ include/pqxx/util.h:
+  - Workaround for gcc 2.95: default args in template function specializations
+2003-05-04  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/cursor.cxx:
+  - Declare all cursors SCROLL for now
+2003-05-04  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connectionitf.h, include/pqxx/transactionitf.h, 
+ include/pqxx/util.h, src/connectionitf.cxx, src/transactionitf.cxx:
+  - Made lots of things non-const in Unique<>, ConnectionItf, TransactionItf
+  - Session variables interface in ConnectionItf, TransactionItf
+  - SetClientEncoding() now just sets CLIENT_ENCODING variable
+2003-05-03  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connectionitf.h, src/connectionitf.cxx:
+  - Restore client encoding upon recovering connection
+  - Added some documentation
+ include/pqxx/result.h:
+  - Moved template operator<<(..., Field) into pqxx namespace
+ include/pqxx/util.h:
+  - More documentation for PQAlloc
+2003-05-03  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/util.h, src/connectionitf.cxx:
+  - Moved PQAlloc<> from connectionitf.cxx to util.h
+ include/pqxx/result.h:
+  - Added BinaryString
+2003-04-28  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ debian/*:
+  - Replaced Ray Dassen's Debian packaging with Greg Hookey's.  Thanks to both!
+2003-04-21  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.h:
+  - Changed Field::size() from int to size_type
+2003-04-02  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ test/test007.cxx:
+  - Use PSQL_ASCII instead of utf8 as the test encoding
+2003-03-31  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Also looks for postgres in /usr/local/pgsql
+2003-03-31  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Added libpq's location to dynamic link path.  Thanks Bjorn Wingman!
+2003-03-31  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.h:
+  - Added ColumnNumber() to Tuple, at key88sf's request
+2003-03-30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/largeobject.h:
+  - Removed superfluous to_file functions for const char[]
+  - Extended test coverage
+ include/pqxx/tablereader.h:
+  - Removed nonexistant operator>> versions for Result, string
+ test/test007.cxx:
+  - Test ConnectionItf::SetClientEncoding()
+ test/test052.cxx, test/test053.cxx, test/test054.cxx, test/test055.cxx:
+  - New
+2003-03-29  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ test/test014.cxx:
+  - Increased test coverage
+2003-03-29  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/except.h:
+  - New
+  - New exception class: sql_error
+ include/pqxx/result.h, src/connectionitf.cxx, src/result.cxx: 
+  - Failed queries now throw sql_error, including query text
+2003-03-29  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection.h, src/connection.cxx, test/test001.cxx, 
+ test/test023.cxx:
+  - Default constructors for Connection and LazyConnection
+ include/pqxx/largeobject.h:
+  - Better test coverage
+  - Added LargeObjectAccess::seek()
+  - Documented LargeObjectAccess::cseek() return value
+  - Added Reason() functions to LargeObject, LargeObjectAccess
+ src/largeobject.cxx:
+  - Added Reason() functions to LargeObject, LargeObjectAccess
+  - Use Reason() to describe some errors more accurately
+ test/test050.cxx:
+  - More devious mixed-mode access
+ test/test051.cxx:
+  - New
+2003-03-27  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Check for PQfreemem()
+ include/pqxx/connectionitf.h:
+  - Better documentation for SetNoticer
+  - Made destructor inline to reduce pain for Windows users
+  - Added SetClientEncoding()
+ include/pqxx/largeobject.h:
+  - Fixed missing BufSize arguments in basic_[o]lostream constructors
+ include/pqxx/result.h:
+  - Default constructor for const_iterator
+ src/connectionitf.cxx:
+  - Use PQfreemem() for notifications, if available
+ test/test050.cxx:
+  - New
+2003-03-25  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/util.h:
+  - Support string conversion of signed/unsigned shorts
+2003-03-24  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Also checks for <libpq/libpq-fs.h> header
+ include/pqxx/util.h:
+  - New Quote<>() template for string constants
+ test/test018.cxx:
+  - Tests new version of Quote<>()
+2003-03-21  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Include Doxyfile in distribution archive
+2003-03-21  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/transactionitf.h, src/transactionitf.cxx:
+  - Preliminary support for "named" statements
+2003-03-19  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection.h, src/connection.cxx:
+  - Explicit destructors to work around another problem with Sun CC 5.1
+2003-03-18  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Changed check for abs(long) to be more likely to fail
+2003-03-17  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ win32/libpqxx.mak:
+  - Replaced by more up-to-date version (thanks Key88sf)
+2003-03-17  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/largeobject.h:
+  - Documentation improvements
+  - ilostream, olostream, lostream now have user-definable buffer size
+ include/pqxx/result.h, include/pqxx/tablewriter.h:
+  - More work on reducing Visual C++ workarounds, thanks Key88sf!
+ test/test049.cxx:
+  - Uses a few standard algorithms on Result
+2003-03-16  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/largeobject.h, src/largobject.cxx:
+  - Added C++-style read/write to LargeObjectAccess
+  - Documented return values of cread(), cwrite()
+  - largeobject_streambuf now has user-definable buffer size
+2003-03-15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connectionitf.h:
+  - New
+ include/pqxx/connection.h:
+  - Removed deprecated C-style NoticeProcessors
+  - Removed deprecated IsOpen()
+  - Split Connection into class hierarchy
+ include/pqxx/largeobject.h, src/largeobject.cxx:
+  - Silence warning about C-style cast in InvalidOid macro
+ test/test001.cxx, test/test002.cxx, test/test014.cxx, README:
+  - Moved optional complexity out of test001 for clarity
+ test/test049.cxx:
+  - New
+2003-03-15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ README:
+  - Documented connection strings
+2003-03-14  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ README, include/pqxx/result.h, include/pqxx/tablewriter.h:
+  - Killed NO_PARTIAL_CLASS_TEMPLATE_SPECIALISATION. Thanks key88sf@hotmail.com!
+2003-03-13  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Tests now respect different definitions of PGSTD
+2003-03-13  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac, include/pqxx/compiler.h:
+  - Check & workaround for "ambiguous abs(long)" error on Sun compiler
+ src/connection.cxx, src/cursor.cxx:
+  - Changes to make Sun compiler happy (thanks Jeroen van Erp)
+2003-03-12  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ doc/html/Reference/*lostream*.html:
+  - New
+ include/pqxx/largeobject.h:
+  - in & out are not from std::ios originally, but from std::ios_base
+  - Fix: olostream now syncs itself before closing
+  - lostream and olostream sync themselves twice before closing
+ include/pqxx/util.h:
+  - Added ToString<>() specialization for char *const &
+ src/cachedresult.cxx:
+  - Compile fixes for Sun compiler (thanks Jeroen van Erp)
+2003-03-10  J.H.M. Dassen (Ray) <jdassen@debian.org>
+ Generate pkgconfig metadata file; updated debianisation.
+2003-03-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Makefile.am:
+  - Added debian packaging directory to distribution
+ include/pqxx/largeobject.h:
+  - Added ilostream, olostream, lostream
+ test/test048.cxx:
+  - Uses ilostream, olostream
+2003-03-07  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/largeobject.h, src/largeobject.h, test/test048.cxx:
+  - Replaced low-level LargeObject::cunlink() with LargeObject::remove()
+  - Added default constructor for LargeObject
+ test/test048.cxx:
+  - Now also removes the large object it creates
+2003-03-06  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/all.h:
+  - Includes largeobject.h
+  - Was missing in archive in 1.5.0
+ include/pqxx/connection.h:
+  - Made LargeObject a friend, with access to raw connection
+ include/pqxx/largeobject.h, src/pqxx/largeobject.cxx:
+  - New
+ include/pqxx/transactionitf.h:
+  - Made Conn() public
+ test/test001.cxx:
+  - Fixed outdated comment about notice processors & C linkage
+ test/test048.cxx:
+  - New
+2003-02-28  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cachedresult.h, src/cachedresult.cxx:
+  - Removed confusing "clear()" method
+ include/pqxx/result.h:
+  - Can now write Field to any type of stream
+ test/test046.cxx, test/test047.cxx:
+  - New
+2003-02-28  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ README:
+  - Added Documentation section
+ doc/libpqxx.sgml, include/pqxx/cursor.h:
+  - Various minor updates
+ include/pqxx/all.h:
+  - New
+ test/test001.cxx:
+  - Uses new <pqxx/all.h>
+2003-02-26  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection.h, include/pqxx/result.h, include/pqxx/tablereader.h:
+  - Added/fixed some test coverage tags
+ include/pqxx/cursor.h:
+  - Test coverage for new "adopt existing SQL cursor" constructor
+ src/cursor.cxx:
+  - m_Name now includes quotes (to fix trouble with adopted SQL cursors)
+ test/test045.cxx:
+  - New
+2003-02-25  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cachedresult.h, src/cachedresult.cxx:
+  - Fixed silly lifetime bug (now returns reference)
+  - Removed CacheEntry class for now (uses less memory this way)
+ src/cursor.cxx:
+  - Oops, forgot to save changes earlier.
+2003-02-25  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cursor.h, src/cursor.cxx:
+  - Cursor may adopt existing SQL cursor returned from function
+2003-02-24  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ test/*:
+  - Great Renaming of all test programs to 0-padded 3-digit test numbers
+2003-02-20  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cachedresult.h, src/cachedresult.cxx:
+  - Store a single empty result to return when needed (fixes lifetime bug)
+2003-02-17  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cachedresult.h, include/pqxx/connection.h,
+ include/pqxx/result.h, include/pqxx/robusttransaction.h,
+ include/pqxx/tablereader.h:
+  - Documented more parameters
+2003-02-15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection.h, src/connection.cxx:
+  - Removed default constructor completely
+2003-02-13  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection.h, src/connection.cxx, test/test43.cxx:
+  - #include <memory>
+  - Disabled controversial default constructor for now
+ include/pqxx/transactionitf.h, test/test*.cxx:
+  - Added Exec() version taking query argument in std::string form
+2003-02-12  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/transaction.h:
+  - Fixed little mistake in inline docs.  Thanks Dave Gomboc.
+2003-02-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection.h, src/connection.cxx, test/test*.cxx:
+  - Connection constructor now accepts null connection string
+  - Default constructor for Connection creates lazy connection
+2003-02-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Bumped revision to 1.4.0
+ include/pqxx/connection.h, src/connection.cxx, test/test1.cxx:
+  - Rename Connection::IsOpen() to is_open() to conform to Standard Library
+ include/pqxx/connection.h, src/connection.cxx, test/test1.cxx,
+ test/test10.cxx, test/test14.cxx:
+  - Introduced Noticer to replace NoticeProcessor (which had C linkage)
+  - Deprecated NoticeProcessor
+ test/test13.cxx, test/test15.cxx, test/test16.cxx, test/test17.cxx,
+ test/test18.cxx, test/test21.cxx, test/test29.cxx, test/test32.cxx, 
+ test/test33.cxx, test/test34.cxx, test/test35.cxx, test/test36.cxx,
+ test/test37.cxx:
+  - Removed unnecessary custom NoticeProcessors
+2003-02-10  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Fix spurious "yes" (or "no") in configure output
+  - No longer go back from C++ to C for just a few checks
+2003-02-10  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/cursor.cxx:
+  - Detect problematic consequence of unknown cursor position
+2003-01-31  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Fixed detection of PQescapeString() presence, thanks David Wright
+2003-01-28  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/cursor.cxx:
+  - Add double-quotes around cursor name in SQL to circumvent case conversion
+2003-01-24  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ README:
+  - Documented Windows build essentials
+2003-01-24  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/cursor.cxx:
+  - Clarified internal error message
+ test/test5.cxx:
+  - Clarified non-harmful error message
+2003-01-19  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/util.h:
+  - Support long double type
+2003-01-10  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/cursor.cxx:
+  - Fixed border case in size detection
+ win32/libpqxx.mak:
+  - Enabled template workaround for Microsoft's compiler
+2003-01-09  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/util.h:
+  - Made "no PQescapeString()" workaround in Quote() slightly more portable
+2003-01-08  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ test/test13.cxx:
+  - Added missing <cassert> - thanks postgres@vsservices.com
+2003-01-06  J.H.M. Dassen (Ray) <jdassen@debian.org>
+ configure.ac:
+  - More extensive searching for PostgreSQL headers and libraries.
+2003-01-02  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/cursor.cxx:
+  - Fixed positioning bug when walking off right edge of result set
+ test/test44.cxx:
+  - New
+2003-01-02  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cursor.h, src/cursor.cxx:
+  - Rewrote positioning code.  SEEMS TO WORK NOW!
+  - Added size()
+ test/test27.cxx, test/test8.cxx:
+  - Aligned test output
+ test/test40.cxx:
+  - Added test case where Cursor discovers its size spontaneously
+2003-01-01  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cachedresult.h, src/cachedresult.cxx:
+  - Make use of Cursor's absolute positioning.  NOT FUNCTIONAL YET.
+ *:
+  - Updated copyright notices
+2002-12-31  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ test/test18.cxx, test/test32.cxx, test/test37.cxx, test/test41.cxx:
+  - Reduced (expected, but still confusing) error output
+2002-12-29  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cursor.h, src/cursor.cxx:
+  - Added absolute cursor positioning
+ src/cursor.cxx:
+  - Rewrote Move()/Fetch() row count logic
+ test/test24.cxx:
+  - Fixed year for Space Oddyssey
+ test/test41.cxx:
+  - Reduced overrun width being tested
+ test/test43.cxx:
+  - New
+2002-12-23  Jeroen T. Vermeulen <jtv@xs4all.nL>
+ include/pqxx/cursor.h, src/cursor.cxx, test/test42.cxx:
+  - Cursor::Move() now always returns number of rows moved
+ include/pqxx/*.h, src/*.cxx:
+  - replaced some string arguments with const string &
+2002-12-22  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cursor.h:
+  - new version of Move() reports number of rows skipped
+ include/pqxx/tablewriter.h:
+  - inline TableWriter::FieldConverter::Escape()
+  - fix Visual C++ version of operator()
+ src/cursor.cxx:
+  - report negative move distances for backward moves
+ test/test42.cxx:
+  - New
+2002-12-21  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cursor.h:
+  - replaced Result_size_type with Result::size_type (now visible in this file)
+ include/pqxx/util.h:
+  - eliminated Result_size_type_min and Result_size_type_max
+2002-12-14  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cursor.h, src/cursor.cxx:
+  - Introduced size_type typedef
+ test/test13, test/test18, test/test32, test/test37:
+  - Prepend "(Expected)" to error messages that are supposed to be there
+2002-12-09  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cursor.h:
+  - Add warning about not all queries allowing cursors to go backwards
+ test/test19.cxx, test/test22.cxx, test/test38.cxx, test/test40.cxx,
+ test/test41.cxx:
+  - Use events table for cursor test to circumvent trouble with pg_tables in
+    postgres 7.3 (has become a view, so cursors don't go backwards)
+ test/test5.cxx, test/test24.cxx:
+  - Insert some extra rows in events so cursor tests will work
+2002-12-09  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cachedresult.h:
+  - Added cautionary comment about limitations in PostgreSQL
+2002-12-08  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac, src/cursor.cxx, src/robusttransaction.cxx, src/transaction.cxx:
+  - Removed DIALECT_POSTGRESQL setting
+2002-12-08  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/util.h:
+  - Fixed missing PGSTD:: qualification for std::exception
+2002-12-04  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Test for presence of PQescapeString()
+ include/pqxx/util.h:
+  - Fixed Quote() for outlandish characters.  Thanks Bada.
+2002-12-03  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac, test/test23.cxx, test/test4.cxx:
+  - Not only test for <sys/select.h>, but also see if it works--thanks Rod 
+    Taylor for feedback, testing, and facilities.
+2002-12-03  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/cachedresult.cxx:
+  - Fixed cursor position bug when size was even multiple of granularity
+ test/test41.cxx:
+  - New
+2002-12-02  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cachedresult.h:
+  - Implemented empty()
+  - Added m_Lower
+  - clear() no longer forgets size information, just flushes cache
+ src/cachedresult.h:
+  - Simplified binary search logic using m_Lower
+  - Removed special case (-1 for unknown) from m_Upper
+  - No longer rely on m_Cache to provide highest known-to-exist block
+2002-12-02  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/cursor.cxx:
+  - Use ALL and BACKWARD ALL instead of highest/lowest representable numbers
+ test/test19.cxx, test/test38.cxx:
+  - Replaced hardcoded table name by command-line argument as intended
+2002-12-01  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Bumped revision to 1.2.0.
+ include/pqxx/CachedResult.h, src/CachedResult.cxx:
+  - New
+ include/pqxx/compiler.h, include/pqxx/robusttransaction.h:
+  - Removed constructs that looked like HTML tags but weren't.
+ test/test40.cxx:
+  - New
+2002-11-07  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Workaround for missing InvalidOid definition
+2002-10-23  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.h, src/result.cxx:
+  - Added AffectedRows() function requested by Peter Novodvorsky
+ test/test13.cxx:
+  - Tests Result::InsertedOid() and Result::AffectedRows()
+ test/test7.cxx:
+  - Tests Result::AffectedRows()
+2002-10-21  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.h:
+  - Changed Tuple constructor arg from Tuple::size_type to Result::size_type
+ include/pqxx/cursor.h, include/tablereader.h, include/tablestream.h,
+ include/tablewriter.h, src/cursor.cxx, src/tablereader.cxx,
+ src/tablestream.cxx, src/tablewriter.cxx:
+  - Constructors now take TransactionItf & instead of Transaction &
+2002-10-21  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh:
+  - Fixed apparent typo (confflags defined, $conf_flags used)
+2002-10-20  J.H.M. Dassen (Ray) <jdassen@debian.org> 
+ autogen.sh:
+  - Don't silently continue after errors.
+ configure.ac:
+  - Provide a description for HAVE_SYS_SELECT_H so autoheader doesn't exit with
+    an error.
+  - Added a few more warnings: -Wmultichar, -Wabi, -Wctor-dtor-privacy.
+ debian/rules:
+  - [clean] Clean out generated HTML files.
+  - [configure] Actually use confflags variable; simplified testing with a 
+    different C++ compiler.
+ src/Makefile.am:
+  - Support building outside the source directory.
+2002-10-15  J.H.M. Dassen (Ray) <jdassen@debian.org>
+ debian/libpqxx-dev.files: 
+  - Include .la file
+ debian/rules:
+  - Update config.{guess,sub} from autotools-dev if possible.
+  - Ensure all files installed by "make install" end up in a package.
+  - Relax shlib dependency to >= the upstream version.
+ autogen.sh:
+  - libtoolize --force
+  - Make it possible to skip configure step through an environment variable.
+ config/config.guess, config/config.sub, config/ltmain.sh:
+  - Regenerated with current libtool
+ debian/changelog, debian/control, debian/rules:
+  - Updated for new Debian policy revision.
+2002-10-13 16:00 Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh:
+  - Check for automake-1.7
+ configure, */Makefile.in:
+  - Regenerated with automake 1.7
+ configure.ac:
+  - Check for <sys/select.h>
+  - Bumped revision to 1.1.2
+ test/test23.cxx, test/test4.cxx:
+  - Replaced Sleep()/sleep() and Windows workaround by select()
+2002-09-29 14:00 Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/connection.h:
+  - Documented log table creation and contents
+ src/connection.cxx:
+  - GetNotifs() frees notification structs a little earlier
+2002-09-27 02:45 Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/connection.cxx:
+  - Made GetNotifs() a little more aggressive in freeing PGnotify structs
+2002-09-25 03:00 Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Removed several unwanted gcc options, making compile output readable again
+  - Bumped revision to 1.1.1
+ include/pqxx/connection.h:
+  - Made m_Conn, m_NoticeProcessor mutable
+  - Made Connect(), Disconnect(), SetupState() const
+  - Un-inlined BackendPID()
+  - Added Activate(), Deactivate()
+ include/pqxx/nontransaction.h:
+  - comment added
+ src/connection.cxx:
+  - Connect() now assumes connection is not already active
+  - Fixed bug: Connect() didn't tell libpq about pending notice processor
+ src/robusttransaction.cxx:
+  - Created local alias for InvalidOid to reduce compiler warnings
+ test/test22.cxx:
+  - a little less output
+2002-09-23 01:00 Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection.h, src/connection.cxx:
+  - Now caches NoticePreprocessor & trace file set by user
+  - Implemented lazy connections (requested by Greg Copeland)
+ include/pqxx/result.h:
+  - Added InsertedOid()
+ include/pqxx/trigger.h:
+  - Added admonishing comment about backend process ID
+ src/robusttransaction.cxx:
+  - Use log record's oid instead of explicit id field
+  - Only attempt to create log table if creation of log field fails
+  - Thanks to Greg Copeland for ideas, criticism & validation
+ test/test17.cxx:
+  - Fixed comment (used to call itself test15)
+ test/test21.cxx, test/test22.cxx, test/test23.cxx, test/test24.cxx,
+ test/test25.cxx, test/test26.cxx, test/test27.cxx, test/test28.cxx,
+ test/test29.cxx, test/test30.cxx, test/test31.cxx, test/test32.cxx,
+ test/test33.cxx, test/test34.cxx, test/test35.cxx, test/test36.cxx,
+ test/test37.cxx, test/test38.cxx, test/test39.cxx
+  - New
+2002-09-20 15:15 Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/connection.h:
+  - Added admonishing comment for BackendPID()
+ src/connection.cxx:
+  - Noted some exceptions that may change to broken_connection
+2002-08-13 15:00 J.H.M. Dassen (Ray) <jdassen@debian.org>
+ autogen.sh:
+  - Use automake 1.6 if available
+ include/pqxx/Makefile.am:
+  - New
+ debian/rules:
+  - Enable maintainer-mode for warnings
+ debian/libpqxx-dev.dirs:
+  - Dir for docs
+ debian/libpqxx-dev.doc-base:
+  - New
+ debian/control:
+  - Added section for source package
+  - Added Build-depends on doxygen
+ debian/.cvsignore:
+  - New
+ config/.cvsignore, include/pqxx/.cvsignore:
+  - Updated
+2002-08-11 22:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Makefile.am:
+  - added win32 directory to distribution
+ include/pqxx/result.h, include/pqxx/tablewriter.h, test/test9.cxx, 
+ test/test20.cxx:
+  - tests cover all methods again, including remaining 3 (near-)trivial ones
+2002-08-10 23:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ win32/*:
+  - Build procedure for Visual C++ 7 by Clinton James
+ include/pqxx/compiler.h:
+  - Visual C++ workarounds moved to win32 directory (Clinton James)
+ include/pqxx/result.h, include/pqxx/tablewriter.h:
+  - Patches by Clinton James to help Visual C++ 7 port, with modifications for
+    gcc's sake
+2002-08-11 22:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ debian/*:
+  - Debianized by Ray Dassen
+ */.cvsignore:
+  - Added by Ray Dassen
+ */Makefile.am, configure.ac:
+  - Various cleanups by Ray Dassen
+  - Added HTML reference documentation to distribution
+2002-06-12 17:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/transactionitf.cxx, test/test20.cxx:
+  - Transaction is now detached from Connection on Commit or Abort
+2002-06-12 16:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ doc/libpqxx.sgml:
+  - Lots of documentation for Transactor
+ include/pqxx/connection.h, include/pqxx/transactionitf.h:
+  - More brief descriptions
+2002-06-12 00:15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/nontransaction.h, include/pqxx/result.h, 
+ include/pqxx/robusttransaction.h, include/pqxx/tablereader.h, 
+ include/pqxx/tablestream.h, include/pqxx/tablewriter.h,
+ include/pqxx/transaction.h, include/pqxx/transactionitf.h,
+ include/pqxx/transactor.h, include/pqxx/trigger.h:
+  - Added brief descriptions for classes
+2002-06-08 23:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ doc/libpqxx.sgml:
+  - Various minor updates
+2002-06-07 17:15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Removed unneeded check for <errno.h>
+  - Bumped version to 0.5.0
+ Makefile.am:
+  - Now also installs headers!
+2002-06-04 20:00  Jeroen T. Vermeulen <jtv@xsall.nl>
+ doc/Makefile.am:
+  - Included libpqxx.sgml into list of files to go into distribution
+2002-06-04 15:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ doc/libpqxx.sgml:
+  - Removed part about unwritten reference (use doxygen now!)
+2002-06-04 01:45  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Removed check for std::multimap
+ include/pqxx/connection.h:
+  - Made use of multimap for triggers list unconditional
+  - Removed overdone sanity check from Perform()
+2002-06-03 00:45  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Added check for std::multimap
+ include/pqxx/connection.h:
+  - Use std::multimap for triggers, if available
+2002-06-02 23:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.h:
+  - Made design decision on ColumnNumber() (not checked, return -1 on failure)
+ include/pqxx/tablereader.h:
+  - Now also handles \t and \n coming from backend
+2002-06-01 20:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Now checks for PostgreSQL libpq header in /usr/include/postgresql/
+  - No longer uses -Wpadded compiler option
+ include/pqxx/compiler.h, include/pqxx/result.h:
+  - Hopefully fixed "multiple definition of std::iterator" problem
+2002-05-29 22:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/util.h:
+  - Added ToString()/FromString()/FmtString() specializations for short, bool,
+    unsigned char.  Thanks Jonathan C. Bodner.
+2002-05-27 22:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Makefile.am:
+  - Removed autom4te.cache from MAINTAINERCLEANFILES (won't work for dirs)
+ doc/libpqxx.sgml, include/pqxx/result.h, test/test11.cxx:
+  - Renamed Result::Field::name() to Name()
+ include/pqxx/connection.h:
+  - Renamed Transactor::TRANSACTIONTYPE to argument_type
+  - Made RemoveTrigger take non-const argument
+ include/pqxx/result.h:
+  - Fixed documentation comment
+ include/pqxx/tablewriter.h:
+  - Rewrote ezinekoT() to make more use of STL
+  - Low-level optimizations
+ include/pqxx/transactor.h, test/test(1[357]|[467]).cxx, doc/libpqxx.sgml:
+  - Renamed Transactor::TRANSACTIONTYPE to argument_type
+ include/pqxx/util.h:
+  - Rewrote Quote() to make more use of STL
+ src/connection.cxx:
+  - Rewrote RemoveTrigger() to make more use of STL
+ test/test5.cxx:
+  - Added row with empty field to test data set
+2002-05-20 15:15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/transactor.h:
+  - Made adaptable (argument_type etc. typedefs)
+2002-05-20 05:45  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Moved config.h.in into include/pqxx
+  - Removed -Wdisabled-optimization in maintainer mode
+  - Removed unnecessary checks AC_STRUCT_TM, AC_FUNC_MALLOC, 
+    AC_CHECK_FUNCS(memset).
+ doc/libpqxx.sgml:
+  - More about transactions, in_doubt_error
+  - Documented Quote(), ToString(), FromString()
+ Doxyfile:
+  - Removed LaTeX output
+  - Moved HTML output to doc/html/Reference
+  - Tweaked output some more
+  - Removed version number
+ include/pqxx/compiler.h:
+  - Moved config.h into include/pqxx
+ include/pqxx/result.h:
+  - Fixed some type typos in function parameters
+2002-05-17 23:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Removed ${with_postgres_include}/(internal|server) from include path
+  - Bumped version to 0.3.1
+ include/pqxx/util.h:
+  - Removed troublesome postgres_fe.h include!
+2002-05-12 23:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac:
+  - Included ${with_postgres_include}/internal in include path to help users
+    of RedHat-like systems find postgres_fe.h. 
+ Doxyfile:
+  - Created
+ include/pqxx/compiler.h:
+  - Doxygenized some comments
+ include/pqxx/cursor.h:
+  - More comments
+ include/pqxx/robusttransaction.h:
+  - Doxygenized some comments
+ include/pqxx/tablereader.h:
+  - Doxygenized some comments
+ include/pqxx/tablestream.h:
+  - Doxygenized some comments
+ include/pqxx/tablewriter.h:
+  - Doxygenized some comments
+ include/pqxx/transaction.h:
+  - Doxygenized some comments
+ include/pqxx/transactionitf.h:
+  - Doxygenized some comments
+ include/pqxx/util.h:
+  - Doxygenized some comments
+2002-05-05 03:45  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/libpqxx/*.h:
+  - Converted many comments to doxygen/javadoc format
+ README:
+  - More useful information
+2002-05-05 01:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ README:
+  - Greatly extended build documentation
+2002-05-04 20:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.h:
+  - Added clear(), capacity()
+ include/pqxx/tablewriter.h:
+  - Added "range" versions of insert() etc.
+  - Added dummy reserve()
+ include/pqxx/transactor.h:
+  - Protected against multiple inclusion
+ include/pqxx/*.h:
+  - Changed PG_[...] macros to PQXX_[...]
+ test/test5.cxx:
+  - Simplified using range versions of TableWriter methods
+ test/test6.cxx:
+  - Table arguments now default to "orgevents" and "events"
+ test/test*.cxx:
+  - Included libpqxx headers with <>, rather than ""
+2002-04-28 23:45  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh:
+  - Used automake's --copy option
+ config/Makefile.am:
+  - Created so config stuff can get packaged
+ configure.ac:
+  - Added AM_MAINTAINER_MODE
+  - Moved generated config files into directory of their own
+  - Bumped version to 0.2
+ doc/Makefile.am:
+  - Got html subdir into package
+ include/Makefile.am:
+  - Moved pqxx from SUBDIRS to EXTRA_DIST
+ Makefile.am:
+  - Added doc and config subdirs
+2002-04-27 13:20  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ autogen.sh:
+  - Added --copy option to automake invocation
+2002-04-07 02:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Configure.ac:
+  - Fixed AM_INIT_AUTOMAKE line
+ Readme:
+  - Described build & install procedure
+ Test6:
+  - Fixed handling of (expected) CreateTable failure
+2002-04-05 21:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Configure:
+  - Finally found out what was missing: VERSION was undefined
+  - Added -ffor-scope to compiler command line
+  - Changed -fascist to -ffascist
+  - Cleaned up --with-postgres code, fixed typo
+ test/Makefile.am:
+  - Replaced John Anderson's test environment parameters with my own
+ Test6:
+  - Creates destination table if it didn't already exist
+2002-04-02 01:45  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ TableWriter:
+  - Wrapped back_insert_iterator specialization in namespace PGSTD { ... }
+ Test1, Test2, Test4, Test7, Test10, Test14, Test15, Test16, Test17, Test19:
+  - Made argc anonymous to silence "unused parameter" warnings
+ TransactionItf:
+  - Begin() now calls End() on failure (thanks Clinton James for bug report)
+  - End() now ignores redundant invocations
+  - Destructor checks that End() has been called
+  - Added empty throw specification to End()
+2002-04-01 01:45  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Configure:
+  - More help from John Anderson
+ TableWriter:
+  - Enclosed std::back_insert_iterator specialization in namespace PGSTD
+2002-03-31 01:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ All:
+  - Integrated John Anderson's autoconf/automake files and Ray Dassen's fixes
+ Result:
+  - Moved some inline functions to silence compiler warnings
+2002-03-30  J.H.M. Dassen (Ray) <jdassen@debian.org>
+ configure.in:
+  - Renamed from configure.ac
+  - Added bug report address to AC_INIT
+  - Check for and enable several compiler warnings etc.
+  - Detect whether <limits> is available
+  - Detect whether <iterator> defines 
+ Util:
+  - Look for postgres_fe.h in a "server" subdirectory
+ Compiler:
+  - Use configure-determined HAVE_LIMITS
+ doc/Makefile:
+  - Created
+ Docs:
+  - Added DOCTYPE, made proper DocBook, use <ulink> for libpq reference.
+2002-03-29 01:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+  All:
+   - DLL export directives for Windows, thanks Clinton James
+  ChangeLog:
+   - Created
+   - Moved NEWS over to ChangeLog
+  News:
+   - Created for more high-level changes
+  Selftest:
+   - Exits when any command fails
+  Test4:
+   - sleep() workaround for Windows, thanks Clinton James
+2002-03-27 01:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ AUTHORS:
+  - Created
+ CHANGES:
+  - Renamed to NEWS
+2002-03-26 22:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Makefile:
+  - Put regression test into separate script
+ Result:
+  - Inlined Result::Field methods
+ Selftest:
+  - Created
+2002-03-26 00:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Doc:
+  - Added HTML docs, fixed bugs in SGML; thanks Bruce Momjian.
+2002-03-23 05:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Result, TransactionItf, Transactor:
+  - Several compile fixes (especially under MS Visual C++)--Clinton James
+2002-03-22 02:45  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ All:
+  - Renamed *.cc to *.cxx for MS Visual C++, thanks Clinton James
+2002-03-20 14:15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Result:
+  - Fixed to compile errors on gcc 2.96.x, thanks Vyacheslav Ignatyuk
+2002-03-20 02:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ All:
+  - Renamed namespace Pg to pqxx for consistency
+2002-03-20 01:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ All:
+  - Renamed library source files to match new header file names
+2002-03-20 01:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ All:
+  - Great Renaming of header files (pg_*.h to pqxx/*.h)
+2002-03-20 00:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ All:
+  - Moved library header files into include directory
+  - Moved library source files into src directory
+  - Moved test source files into test directory
+ Makefile:
+  - Reduced use of repetitive explicit rules
+2002-03-17 01:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ All:
+  - Full test coverage!
+ Cursor:
+  - Full test coverage
+  - Removed PostgreSQL-specific FORWARD/BACKWARD, previously labeled "ANSI"
+  - Kludged BACKWARD_ALL around breakage
+  - Implemented += and -=
+ NonTransaction, RobustTransaction, Transaction:
+  - Documented test coverage of overridables, even though they're private
+ Test1:
+  - More comments
+ Test19:
+  - Created
+ Test3:
+  - Improved Cursor test coverage
+ TransactionItf:
+  - Updated header comments
+2002-03-05 17:45  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Makefile:
+  - Now queries log table at end of regression test; should be empty
+ Test4, Test6, Test7, Test13, Test15, Test17:
+  - Recommended practice is now to use TRANSACTIONTYPE in Transactors
+ Test18:
+  - Created
+2002-03-05 00:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ RobustTransaction:
+  - Initial implementation
+ Test14:
+  - Oops, tested Transaction instead of NonTransaction
+ Test16:
+  - Created
+ Test17:
+  - Created
+2002-03-04 22:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ RobustTransaction:
+  - Created as outline based on Transaction
+2002-03-04 00:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ NonTransaction:
+  - Created
+ Test14:
+  - Created
+ Test15:
+  - Created
+ Transaction:
+  - Made subclass of new abstract base class TransactionItf
+ TransactionItf:
+  - Created
+ Transactor:
+  - Made choice of transaction class parameterizable
+2002-03-03 17:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Transactor:
+  - Made Transaction class selectable, so can add more transaction types later
+  - Added OnDoubt()
+2002-03-03 16:15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Connection:
+  - In-doubt transactions are no longer retried
+ Makefile:
+  - Added /usr/include/postgresql/internal to include path
+  - Works for PostgreSQL 7.1 and 7.2 now
+ Transaction:
+  - Introduced checking for in-doubt transactions
+  - Minor improvements in error handling
+2002-03-02 14:15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ TableReader:
+  - Full test coverage
+ Test6:
+  - Added consistency check for TableReader's operator!()/operator bool()
+ Test8:
+  - Added consistency check for TableReader's GetRawLine()/Tokenize()
+2002-03-01 00:45  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ TableStream:
+  - Full test coverage
+2002-03-01 00:15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ TableWriter:
+  - Full test coverage
+ Test10:
+  - Used TableWriter to insert tuple
+2002-02-28 23:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Test13:
+  - Created
+ Transactor:
+  - Full test coverage
+2002-02-27 00:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Result:
+  - Full test coverage
+ Test12:
+  - Created
+2002-02-26 23:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Result:
+  - Extended test coverage to metadata queries
+ Test11:
+  - Created
+2002-02-24 22:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Result:
+  - Documented method coverage
+ Test10:
+  - Disabled trace output
+2002-02-24 05:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Transaction:
+  - Full method coverage by self-test
+  - Found recently introduced bug in implicit abort!
+2002-02-24 04:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ TableStream:
+  - Documented method coverage
+ TableReader:
+  - Documented method coverage
+ TableWriter:
+  - Documented method coverage
+ Test10:
+  - Created
+ Transaction:
+  - Documented method coverage
+  - Improved test coverage
+ Transactor:
+  - Documented method coverage
+2002-02-24 01:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ CONCEPT:
+  - Removed unneeded old file
+ Connection:
+  - Full method coverage by self-test
+ Cursor:
+  - Documented method coverage
+ Trigger:
+  - Full method coverage by self-test
+2002-02-15 01:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Docs:
+  - More explanation on transaction bracketing
+ Transaction:
+  - Deferring commits to destruction time was wrong
+2002-02-03 20:15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Result:
+  - Added metadata query methods
+  - Removed unnecessary friendship with Tuple
+2002-02-03 06:00  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Docs:
+  - More examples
+ Makefile:
+  - No longer removes old library.  Same difference.
+  - Abstracted away source tarball, source directory name
+2002-02-02 18:45  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Docs:
+  - More on exceptions, more on executing queries.
+ Makefile:
+  - Now builds an actual (but static) library
+2002-01-26 21:15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ CVS:
+  - Imported into CVS
+ Makefile:
+  - Fixed "std namespace compiler workaround" breako
+  - Added "dist" target
+2002-01-26 00:30  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ All:
+  - New #define PGSTD to replace std if needed
+ Compiler:
+  - New header pg_compiler.h
+  - Genericized workaround for missing numeric_limits
+  - Disable braindead Microsoft Visual C++ warnings
+2002-01-20 14:50  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ Result:
+  - Fixed Result::Field::name() -- thanks to Gilberto Ribeiro de Queiroz
+2002-01-08 21:50  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ TableWriter:
+  - operator= forgot to return *this
+ Test9:
+  - Created to test TableWriter's back_insert_iterator
+2002-01-07 00:15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ TableWriter:
+  - Implemented back_insert_iterator<TableWriter>
+2002-01-01 23:45  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ TableWriter:
+  - Forgot to separate fields in output
+ Tests:
+  - Rearranged to set up their own database environment
+  - New test writes orgevents table
+ Transaction:
+  - Merged "clean" state into "active" state
+  - Moved back-end COMMIT into Transaction's destructor
+2001-12-30 18:00
+ Docs:
+  - Added why-a-new-library section
+  - Explained transactions
+ Transaction:
+  - Abort no longer does a redundant ABORT WORK if already aborted
+2001-12-23 22:30
+ Docs:
+  - Mentions Trigger and TableStream now
+2001-12-23 14:40
+ Connection:
+  - Support removal of triggers
+  - Reserved AddTrigger() and RemoveTrigger() for use by Trigger
+ Test3:
+  - Updated for revised Transactor interface
+ Test4:
+  - Changed "Got [] rows" in output to "Got [] row(s)"
+ Test5:
+  - Updated for revised Trigger interface
+ Test7:
+  - Updated for revised Transactor interface
+ Transactor:
+  - Built name into Transactor as data member
+  - Added name as constructor argument
+  - Name() returns std::string
+ Trigger:
+  - Built registering/unregistering into Trigger; constructor change!
+  - Name() returns std::string
+
+2001-12-16 00:45
+ Connection:
+  - Added COPY support
+ Makefile:
+  - Now sets my personal connect string as CONNSTR for regression test
+  - Uses test7 to restore events table clobbered in test3
+  - Now requires new table "orgevents"
+ TableReader:
+  - Basic functionality implemented
+ TableWriter:
+  - Basic functionality implemented
+ Test4:
+  - Updated comments to reflect new cursor "count" convention
+ Test6:
+  - Created
+ Test7:
+  - Created
+ Transaction:
+  - Added COPY support
+ Util:
+  - Added FromString() analogous (but opposite) to ToString()
+
+2001-12-12 22:20
+ Connection:
+  - Uses new Unique<> template for m_Trans
+ TableReader:
+  - Created
+ TableStream:
+  - Created
+ TableWriter:
+  - Created
+ Transaction:
+  - Now checks for active stream
+  - Destructor catches Abort() exceptions
+ Util:
+  - Introduced Unique<> class template
+
+2001-12-02 20:30
+ All:
+  - Inlined more functions
+ Connection:
+  - Misc. query functions added
+
+2001-12-02 17:30
+ Connection:
+  - ProcessNotice() to call (possibly client-defined) notice processor
+ Transaction:
+  - Now calls notice processor when it can't throw exceptions
+  - Checks for pending triggers before it begins
+ Trigger:
+  - Guarantees that no notifications are delivered inside transactions
+
+2001-12-02 16:00
+ Makefile:
+  - check target now depends on executables
+  - Passes more interesting "count" argument to test4
+ Connection:
+  - MakeEmpty() to create empty result set
+  - Stricter error checking on opening/closing transactions
+ Cursor: 
+  - Irregular meaning of 0 for fetch/move no longer used
+  - Added Fetch() and Move()
+  - Fixed "done" accounting in SetCount()
+  - Separated creation of FETCH command into MakeFetchCmd() method
+ Transaction:
+  - Added MakeEmpty()
+ Util:
+  - Added Result_size_type_max
+ test4:
+  - Seeks to end of query first if backwards retrieval requested
+

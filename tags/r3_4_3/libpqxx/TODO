@@ -1,0 +1,69 @@
+Immediate
+(*) Replace /MT, /MTd with /MD, /MDd in Visual C++ Makefiles
+(*) Disable trace/warning output during destructors on Visual C++
+(*) Add -lwsock32 to tools/Makefile.am if needed (MingW!)
+
+All Over
+(*) Ensure table/column/cursor/... names are always quoted
+
+Build system
+(*) Config header templates for various compilers, libpq versions
+(*) Completely support building outside the source directory
+(*) Ensure there is a way to build without -rpath and use that for the
+    Debian packaging.
+
+Connections
+(*) Encapsulate definition of prepared statements
+(*) Restore prepared statements when restoring a connection
+(*) More helpful broken_connection exception hierarchy
+(*) Connection pooling support
+(*) Support scoped/unscoped non-superuser identity (outside transaction only)
+(*) libpqxx-level trace output
+(*) Probe, and cache, backend feature set if needed
+(*) Speed up connection state restoration by concatenating queries (pipeline?)
+
+Cursors
+(*) Older backends don't have NO SCROLL etc.!
+(*) Think about positioning and nested transactions
+(*) Investigate WITH HOLD feature (nontransaction cursors)
+(*) In PostgreSQL 7.4, MOVE and FETCH are much improved (PQcmdTuples()!)
+
+Exceptions
+(*) Strip newlines from PostgreSQL error messages in exceptions?
+(*) Document exception guarantees (weak / strong / poorly defined / pure)
+
+Large Objects
+(*) Support lo_tell()
+(*) Check for handling of nul characters
+
+Results
+(*) Convert to/from date/time values
+(*) Splice out a reusable interface definition
+(*) Real encoding support (PQmblen(), PQenv2encoding())
+(*) Check for handling of nul characters
+(*) Support PQftablecol()
+(*) Conceive metadata model
+(*) Allow direct mapping onto structs, using member ptr template args
+
+Streams
+(*) Permit column list test failures on pre-7.3 postgres backends
+(*) Provide metadata information in tablestream
+(*) Can we have a tablestream that looks more like a result?
+(*) Create "inserter" class for column lists
+(*) Allow single-level insertion with endt/endr manipulators
+(*) Streambuffer class?
+
+Tests
+(*) Test NaN support!
+(*) Test tablereader and rows ending in empty fields
+
+Transactions
+(*) [pgsql 8.0] Create log table "WITH OIDS" if appropriate
+(*) [pgsql 8.0] Support two-phase commit with separate transaction class(es)
+(*) [pgsql 8.0] Support nested transactions and savepoints
+(*) User schema support for robusttransaction log table
+(*) Support SET CONSTRAINTS (no-op for nontransaction).  Make DEFER scoped?
+(*) Support constraints definition
+
+Util
+(*) Only report closing of non-open sessionfocus during explicit close, not dtor

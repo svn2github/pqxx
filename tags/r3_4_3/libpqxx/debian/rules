@@ -1,0 +1,136 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This is the debhelper compatibility version to use.
+export DH_COMPAT=3
+
+# These are used for cross-compiling and for saving the configure script
+# from having to guess our platform (since we know it already)
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+
+CFLAGS = -Wall -g
+
+ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+	CFLAGS += -O0
+else
+	CFLAGS += -O2
+endif
+ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
+	INSTALL_PROGRAM += -s
+endif
+
+# Get upstream version, and define libpqxx suffix
+UPSTREAM_VERSION = $(shell dpkg-parsechangelog | grep ^Version | sed "s/.* //" | sed "s/-[^-]*$$//")
+LIBRARY_VERSION =  -$(UPSTREAM_VERSION)
+#LIBRARY_VERSION = 1
+
+autoconfigure: autoconfigure-stamp
+autoconfigure-stamp: debian/control
+	dh_testdir
+
+	# Create versioned symlinks
+	cd debian; \
+	for file in libpqxx.*; do \
+	  ln -sf $$file `echo $$file | sed -e 's/libpqxx/libpqxx$(LIBRARY_VERSION)/'`; \
+	done
+	-rm debian/libpqxx$(LIBRARY_VERSION)*.in
+
+	mkdir debian/build; \
+	cd debian/build; \
+	../../configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --enable-static --enable-shared
+
+	touch autoconfigure-stamp
+
+build: build-stamp
+build-stamp: autoconfigure-stamp
+	dh_testdir
+
+	cd debian/build; \
+	$(MAKE)
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp autoconfigure-stamp
+
+	-$(MAKE) distclean
+ifneq "$(wildcard /usr/share/misc/config.sub)" ""
+	cp -f /usr/share/misc/config.sub config/config.sub
+endif
+ifneq "$(wildcard /usr/share/misc/config.guess)" ""
+	cp -f /usr/share/misc/config.guess config/config.guess
+endif
+
+	# Remove CVS dirs present in upstream tarball, so they don't
+	# get packaged by accident.
+	find . -name CVS -print0 | xargs -0 rm -rf
+
+	rm -rf debian/build debian/install
+	rm -rf debian/libpqxx$(LIBRARY_VERSION)*
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+#	Install into virtual root
+	cd debian/build; \
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/install
+
+	# We don't want an RPATH in a Debian package
+	chrpath --delete debian/install/usr/lib/lib*.so
+
+	dh_install
+
+	# Remove examples which include internal headers
+	rm -f `grep -l config\\.h debian/libpqxx-dev/usr/share/doc/libpqxx-dev/examples/*.cxx`
+	rm -f `grep -l config-internal debian/libpqxx-dev/usr/share/doc/libpqxx-dev/examples/*.cxx`
+	rm -f `grep -l compiler\\.h debian/libpqxx-dev/usr/share/doc/libpqxx-dev/examples/*.cxx`
+
+# Build architecture-independent files here.
+binary-indep: install
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: install
+	dh_testdir
+	dh_testroot
+
+	dh_installdocs
+	dh_installexamples
+	dh_installmenu
+	dh_installcron
+	dh_installman
+	dh_installinfo
+	dh_installchangelogs ChangeLog
+	dh_link
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_makeshlibs
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+
+
+SEDPATTERN = -e "s/\#UPSTREAM_VERSION\#/$(UPSTREAM_VERSION)/g" -e "s/\#LIBRARY_VERSION\#/$(LIBRARY_VERSION)/g"
+
+# Make sure debian/control is up-to-date.
+debian/control: debian/changelog debian/control.in
+	sed $(SEDPATTERN) <debian/control.in >debian/control
+
+.PHONY: build clean binary-indep binary-arch binary install
