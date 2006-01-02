@@ -1,0 +1,69 @@
+HIGH-PRIORITY
+(*) Add "private" include directory
+(*) Thread synchronization
+(*) Rename trigger
+
+All over
+(*) Add gcc's deprecated attribute to deprecated functions
+(*) Can gcc's const function attribute be useful anywhere?  It's VERY strict.
+(*) Use gcc's malloc attribute ("pointer not aliased after return")
+(*) Use gcc's nonnull attribute for non-null pointer parameters
+(*) Use gcc's noreturn attribute for non-returning functions
+(*) Use gcc's pure function attribute
+(*) Give private functions "internal" visibility where possible
+
+Build & Configuration
+(*) Move PGHOST guessing logic from tools/preprelease to Makefile.am?
+(*) Make test suite install to a temporary directory & build a test program
+
+Connections
+(*) Support scoped/unscoped non-superuser identity (outside transaction only)
+(*) libpqxx-level trace output
+(*) Factor out "connection policy" hierarchy
+
+Documentation
+(*) Use @c to mark code in Doxygen comments
+(*) Move most of README over to some more powerful format (Doxygen?)
+
+Exceptions
+(*) Strip newlines from PostgreSQL error messages in exceptions?
+(*) Document exception guarantees (weak / strong / poorly defined / pure)
+
+Large Objects
+(*) Check for correct handling of nul characters
+(*) Check out new 64-bit API that's being contributed
+
+Results
+(*) Convert to/from date/time values
+(*) Splice out a reusable interface definition
+(*) Real encoding support (PQmblen(), PQenv2encoding())
+(*) Check for correct handling of nul characters
+(*) Support PQftablecol()
+(*) Support new PQcancel() and friends
+(*) Conceive metadata model
+
+Streams
+(*) Provide metadata information in tablestream
+(*) Can we have a tablestream that looks more like a result?
+(*) Create "inserter" class for column lists
+(*) Allow single-level insertion with endt/endr manipulators
+(*) Streambuffer class?
+
+Tests
+(*) Test broken connections
+(*) Test tablereader and rows ending in empty fields
+
+Thread-safety
+(*) Guard against race bugs by marking "last modification" of objects
+(*) User-definable locking primitive set
+
+Transactions
+(*) User schema support for robusttransaction log table
+(*) Support SET CONSTRAINTS (no-op for nontransaction).  Make DEFER scoped?
+(*) Support constraints definition
+(*) Pipelined operation for high-level classes: cursor, tablestream, ...
+
+Util
+(*) Report closing of non-open sessionfocus only during explicit close, not dtor
+(*) Support floating-point infinities
+
