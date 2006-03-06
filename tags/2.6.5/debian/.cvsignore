@@ -1,0 +1,8 @@
+files
+tmp
+libpqxx-dev
+libpqxx0
+Makefile
+Makefile.in
+*.debhelper
+*.substvars
