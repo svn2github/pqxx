@@ -17,36 +17,6 @@ default:
 
 LIBDIR=lib
 
-!IF "$(DLL)"== "1"
-PQXX_SHARED=/D "PQXX_SHARED"
-!IF "$(DEBUG)" == "1"
-INTDIR=TestDllDebug
-PQXX=$(LIBDIR)\libpqxxD.dll
-PQXXCOPY=$(INTDIR)\libpqxxD.dll
-!ELSE
-INTDIR=TestDllRelease
-PQXX=$(LIBDIR)\libpqxx.dll
-PQXXCOPY=$(INTDIR)\libpqxx.dll
-!ENDIF
-!ELSE
-PQXX_DLL=
-!IF "$(DEBUG)" == "1"
-INTDIR=TestStaticDebug
-PQXX=$(LIBDIR)\libpqxx_staticD.lib
-PQXXCOPY=$(INTDIR)\libpqxx_staticD.lib
-!ELSE
-INTDIR=TestStaticRelease
-PQXX=$(LIBDIR)\libpqxx_static.lib
-PQXXCOPY=$(INTDIR)\libpqxx_static.lib
-!ENDIF
-!ENDIF
-
-!IF "$(DEBUG)" == "1"
-LIBPQ=libpqd.dll
-!ELSE
-LIBPQ=libpq.dll
-!ENDIF
-
 
 # C++ compiler, linker
 CXX=cl.exe
@@ -59,24 +29,43 @@ CXX_FLAGS_BASE=/nologo /W3 /GX /FD /GR /YX /c \
 
 LINK_FLAGS_BASE=kernel32.lib wsock32.lib advapi32.lib /nologo /machine:I386 /libpath:"$(LIBDIR)"
 
-!IF "$(DEBUG)" == "1"
 
+!IF "$(DLL)" == "1"
+PQXX_SHARED=/D "PQXX_SHARED"
+PQXXLIBTYPE="Dll"
+PQXXLIBTYPESUFFIX=""
+PQXXLIBEXT=".dll"
+!ELSE
+PQXXLIBTYPE="Static"
+PQXXLIBEXT=".lib"
+PQXXLIBTYPESUFFIX="_static"
+!ENDIF
+
+!IF "$(DEBUG)" == "1"
+BUILDMODE="Debug"
+DEBUGSUFFIX="D"
 CXX_FLAGS=$(CXX_FLAGS_BASE) /MDd /Gm /ZI /Od /D "_DEBUG" /GZ
 LINK_FLAGS=$(LINK_FLAGS_BASE) /debug /libpath:$(LIBPATH2)
-
 !ELSE
-
+BUILDMODE="Release"
+DEBUGSUFFIX=""
 CXX_FLAGS=$(CXX_FLAGS_BASE) /MD /D "NDEBUG"
 LINK_FLAGS=$(LINK_FLAGS_BASE) /libpath:$(LIBPATH1)
-
 !ENDIF
+
+
+INTDIR="Test$(PQXXLIBTYPE)$(BUILDMODE)"
+PQXXSUBPATH="libpqxx$(PQXXLIBTYPESUFFIX)$(DEBUGSUFFIX).$(PQXXLIBEXT)"
+PQXX=$(LIBDIR)\$(PQXXSUBPATH)
+PQXXCOPY=$(INTDIR)\$(PQXXSUBPATH)
+LIBPQ=libpq$(DEBUGSUFFIX).dll
 
 
 OBJS= \
 ###MAKTEMPLATE:FOREACH test/test*.cxx
-  ###BASENAME###.obj \
+  $(INTDIR)\###BASENAME###.obj \
 ###MAKTEMPLATE:ENDFOREACH
-  runner.obj
+  $(INTDIR)\runner.obj
 
 
 ########################################################
@@ -85,10 +74,11 @@ OBJS= \
 
 all: runner
 
+runner: $(INTDIR) $(INTDIR)\runner.exe
+
 clean:
 	-@del /Q vc70.pch
-	-@del /Q $(INTDIR)\*
-	-@del /Q $(OBJS)
+	-@del /Q $(OBJS) $(INTDIR)\*.exe
 
 $(INTDIR):
 	@mkdir $(INTDIR)
@@ -103,10 +93,13 @@ $(INTDIR)\runner.success: $(INTDIR)\runner.exe \
   $(INTDIR)\$(LIBPQXX) $(PQXX) 
 	@copy $(PQXX) $(PQXXCOPY)
 	@$(INTDIR)\runner.exe
-	@echo >$(INTDIR)\runne.success
+	@echo >$(INTDIR)\runner.success
 
-$(INTDIR)\runner.exe: $(OBJS) $(INTDIR) $(PQXX)
-	@$(LINK) $(LINK_FLAGS) "$(INTDIR)\\runner.obj" /out:"$(INTDIR)\\runner.exe"
+
+$(INTDIR)\runner.exe: $(OBJS) $(PQXX)
+	@$(LINK) $(LINK_FLAGS) "$(INTDIR)\\runner.obj" $(OBJS) \
+		/out:"$(INTDIR)\\runner.exe"
+
 
 ###MAKTEMPLATE:FOREACH test/*.cxx
 $(INTDIR)\###BASENAME###.obj:
