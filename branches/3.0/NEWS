@@ -1,6 +1,7 @@
 3.0.1
  - Fixed breakage with Solaris "make."
  - Fixed various problems in Visual C++ makefile for test suite.
+ - Fixed some problems with RPM packaging.
 3.0
  - Website is now at http://pqxx.org/ (no redirects)
  - Completely replaced cursor classes
