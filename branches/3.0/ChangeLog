@@ -1,3 +1,8 @@
+2009-06-22  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ tools/preprelease:
+ - Don't build tarball again.
+ - Deal with changed "make check" output.
+ - Clean up and rebuild reference documentation.
 2009-01-21  Jeroen T. Vermeulen <jtv@xs4all.nl>
  libpqxx.spec.in:
   - Depend on postgresql-libs and postgresql-devel, thanks Bob Knock
