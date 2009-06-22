@@ -23,6 +23,7 @@ fi
 
 PARENT="$2"
 if test -z "$PARENT"
+then
 	PARENT="trunk"
 fi
 
