@@ -1,4 +1,5 @@
 3.0.2
+ - Fixed compile warnings on some 32-bit configurations.
 3.0.1
  - Fixed breakage with Solaris "make."
  - Fixed various problems in Visual C++ makefile for test suite.

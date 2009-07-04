@@ -8,7 +8,7 @@
  *   Allows access to large objects directly, or through I/O streams
  *   DO NOT INCLUDE THIS FILE DIRECTLY; include pqxx/largeobject instead.
  *
- * Copyright (c) 2003-2008, Jeroen T. Vermeulen <jtv@xs4all.nl>
+ * Copyright (c) 2003-2009, Jeroen T. Vermeulen <jtv@xs4all.nl>
  *
  * See COPYING for copyright license.  If you did not receive a file called
  * COPYING with this source code, please notify the distributor of this mistake,
@@ -434,10 +434,17 @@ protected:
   virtual pos_type seekoff(off_type offset,
 			   seekdir dir,
 			   openmode)
-	{ return AdjustEOF(m_Obj.cseek(offset, dir)); }
+  {
+    return AdjustEOF(m_Obj.cseek(largeobjectaccess::off_type(offset), dir));
+  }
 
   virtual pos_type seekpos(pos_type pos, openmode)
-	{ return AdjustEOF(m_Obj.cseek(pos, PGSTD::ios::beg)); }
+  {
+    const largeobjectaccess::pos_type newpos = m_Obj.cseek(
+	largeobjectaccess::off_type(pos),
+	PGSTD::ios::beg);
+    return AdjustEOF(newpos);
+  }
 
   virtual int_type overflow(int_type ch = EoF())
   {
