@@ -1,4 +1,5 @@
 3.0.2
+ - Shared libraries are now versioned by ABI: 3.0 instead of 3.0.2 etc.
  - Fixed compile warnings on some 32-bit configurations.
  - Documentation no longer includes huge HTML copies of source code.
 3.0.1
