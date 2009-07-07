@@ -2,6 +2,8 @@
  autogen.sh:
  - Get ABI version as well as library version.
  - Single "substitute" function for configure.ac and version header.
+ configure.ac.in:
+ - Substitute full version information.
  doc/Doxyfile.in, src/util.cxx:
  - Make Doxygen see through some cpp macros and such that get in the way.
  - Removed obsolete Doxygen directive DETAILS_AT_TOP.
