@@ -1,3 +1,6 @@
+2009-07-07  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ doc/Doxyfile.in:
+ - Don't generate huge HTML versions of source, thanks Eugene V. Lyubimkin.
 2009-07-04  Jeroen T. Vermeulen <jtv@xs4all.nl>
  include/pqxx/largeobject.hxx:
  - Fixed compile warnings on some 32-bit configurations.
