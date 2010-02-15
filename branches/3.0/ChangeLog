@@ -1,3 +1,7 @@
+2010-02-15  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+ - Fixed #104: -Werror option always used.  Thanks Ray Dassen.
+ - Works around RedHat gcc 4.1 problem.
 2009-08-14  Jeroen T. Vermeulen <jtv@xs4all.nl>
  tools/preprelease:
  - Keep absolute tarball path out of md5sum file.
