@@ -16,7 +16,7 @@ endif
 
 
 # Get upstream version, and define libpqxx suffix
-LIBRARY_VERSION =  -3.1
+LIBRARY_VERSION =  -4.0
 
 autoconfigure: autoconfigure-stamp
 autoconfigure-stamp: debian/control
