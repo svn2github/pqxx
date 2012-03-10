@@ -8,7 +8,7 @@
  *   pqxx::result represents the set of result tuples from a database query
  *   DO NOT INCLUDE THIS FILE DIRECTLY; include pqxx/result instead.
  *
- * Copyright (c) 2001-2011, Jeroen T. Vermeulen <jtv@xs4all.nl>
+ * Copyright (c) 2001-2012, Jeroen T. Vermeulen <jtv@xs4all.nl>
  *
  * See COPYING for copyright license.  If you did not receive a file called
  * COPYING with this source code, please notify the distributor of this mistake,
@@ -87,12 +87,17 @@ class PQXX_LIBEXPORT result :
 public:
   typedef unsigned long size_type;
   typedef signed long difference_type;
-  typedef tuple reference;
+  typedef pqxx::tuple reference;
   typedef const_result_iterator const_iterator;
   typedef const_iterator pointer;
   typedef const_iterator iterator;
   typedef const_reverse_result_iterator const_reverse_iterator;
   typedef const_reverse_iterator reverse_iterator;
+
+  /// For backward compatibility only.  @deprecated Use @c pqxx::tuple instead.
+  typedef pqxx::tuple tuple;
+  /// For backward compatibility only.  @deprecated Use @c pqxx::field instead.
+  typedef pqxx::field field;
 
   result() throw () : super(), m_data(0) {}				//[t3]
   result(const result &rhs) throw () :					//[t1]

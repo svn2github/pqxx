@@ -1,4 +1,9 @@
 2012-03-10  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/result.hxx:
+ - Compatibility typedefs: pqxx::result::tuple and pqxx::result::field.
+ - Not going into trunk, only in the 4.0 series.
+ - Thanks Maxime van Noppen.
+2012-03-10  Jeroen T. Vermeulen <jtv@xs4all.nl>
  include/pqxx/prepared_statement.hxx:
  - Updated docs for prepared-statement parameters: no longer need declarations.
  - Thanks Maxime van Noppen.
