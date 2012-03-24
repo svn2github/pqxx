@@ -1,6 +1,7 @@
 4.0.1
  - Build fix for OS X.
  - Compatibility typedefs: pqxx::result::tuple & pqxx::result::field.
+ - Supports C++11.
 4.0
  - API change: noticers are gone!  Use errorhandlers to capture error output.
  - API change: tablereaders and tablewriters are gone; they weren't safe.
