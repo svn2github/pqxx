@@ -8,7 +8,7 @@
  *   Allows access to large objects directly, or through I/O streams
  *   DO NOT INCLUDE THIS FILE DIRECTLY; include pqxx/largeobject instead.
  *
- * Copyright (c) 2003-2011, Jeroen T. Vermeulen <jtv@xs4all.nl>
+ * Copyright (c) 2003-2012, Jeroen T. Vermeulen <jtv@xs4all.nl>
  *
  * See COPYING for copyright license.  If you did not receive a file called
  * COPYING with this source code, please notify the distributor of this mistake,
@@ -396,7 +396,7 @@ public:
 			openmode mode = PGSTD::ios::in | PGSTD::ios::out,
 			size_type BufSize=512) :			//[t48]
     m_BufSize(BufSize),
-    m_Obj(T, O),
+    m_Obj(T, O, mode),
     m_G(0),
     m_P(0)
 	{ initialize(mode); }
@@ -406,7 +406,7 @@ public:
 			openmode mode = PGSTD::ios::in | PGSTD::ios::out,
 			size_type BufSize=512) :			//[t48]
     m_BufSize(BufSize),
-    m_Obj(T, O),
+    m_Obj(T, O, mode),
     m_G(0),
     m_P(0)
 	{ initialize(mode); }

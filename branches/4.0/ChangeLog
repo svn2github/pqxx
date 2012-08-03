@@ -1,3 +1,8 @@
+2012-08-03  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/largeobject.hxx:
+ - Backported fix for #252: clang++ 3.2 compile error.  Thanks Amy Troschinetz.
+ src/strconv.cxx:
+ - Backported fix for #253: clang++ 3.2 compile error.  Thanks Amy Troschinetz.
 2012-03-25  Jeroen T. Vermeulen <jtv@xs4all.nl>
  test/test002.cxx, test/test007.cxx, test/test011.cxx, test/test012.cxx,
  test/test016.cxx, test/test030.cxx, test/test031.cxx, test/test049.cxx,

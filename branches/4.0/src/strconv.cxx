@@ -6,7 +6,7 @@
  *   DESCRIPTION
  *      implementation of string conversions
  *
- * Copyright (c) 2008, Jeroen T. Vermeulen <jtv@xs4all.nl>
+ * Copyright (c) 2008-2012, Jeroen T. Vermeulen <jtv@xs4all.nl>
  *
  * See COPYING for copyright license.  If you did not receive a file called
  * COPYING with this source code, please notify the distributor of this mistake,
@@ -192,7 +192,7 @@ template<typename T> inline void from_string_float(const char Str[], T &Obj)
 #if defined(PQXX_HAVE_IMBUE)
       S.imbue(locale("C"));
 #endif
-      ok = (S >> result);
+      ok = static_cast<bool>(S >> result);
     }
     break;
   }
