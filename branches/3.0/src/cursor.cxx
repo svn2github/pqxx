@@ -7,7 +7,7 @@
  *      implementation of libpqxx STL-style cursor classes.
  *   These classes wrap SQL cursors in STL-like interfaces
  *
- * Copyright (c) 2004-2008, Jeroen T. Vermeulen <jtv@xs4all.nl>
+ * Copyright (c) 2004-2013, Jeroen T. Vermeulen <jtv@xs4all.nl>
  *
  * See COPYING for copyright license.  If you did not receive a file called
  * COPYING with this source code, please notify the distributor of this mistake,
@@ -230,7 +230,7 @@ result pqxx::internal::sql_cursor::fetch(difference_type rows,
   }
   const string query = "FETCH " + stridestring(rows) + " IN \"" + name() + "\"";
   const result r(m_home.Exec(query.c_str(), 0));
-  displacement = adjust(rows, r.size());
+  displacement = adjust(rows, difference_type(r.size()));
   return r;
 }
 
@@ -250,7 +250,7 @@ cursor_base::difference_type pqxx::internal::sql_cursor::move(
 
   // Starting with the libpq in PostgreSQL 7.4, PQcmdTuples() (which we call
   // indirectly here) also returns the number of rows skipped by a MOVE
-  difference_type d = r.affected_rows();
+  difference_type d = static_cast<difference_type>(r.affected_rows());
 
   // We may not have PQcmdTuples(), or this may be a libpq version that doesn't
   // implement it for MOVE yet.  We'll also get zero if we decide to use a
@@ -298,7 +298,7 @@ pqxx::cursor_base::cursor_base(connection_base &context,
 result::size_type pqxx::internal::obtain_stateless_cursor_size(sql_cursor &cur)
 {
   if (cur.endpos() == -1) cur.move(cursor_base::all());
-  return cur.endpos() - 1;
+  return result::size_type(cur.endpos() - 1);
 }
 
 
@@ -387,8 +387,8 @@ icursorstream &pqxx::icursorstream::ignore(PGSTD::streamsize n)
 
 icursorstream::size_type pqxx::icursorstream::forward(size_type n)
 {
-  m_reqpos += n*m_stride;
-  return m_reqpos;
+  m_reqpos += difference_type(n)*m_stride;
+  return size_type(m_reqpos);
 }
 
 
@@ -450,7 +450,7 @@ pqxx::icursor_iterator::icursor_iterator() throw () :
 pqxx::icursor_iterator::icursor_iterator(istream_type &s) throw () :
   m_stream(&s),
   m_here(),
-  m_pos(s.forward(0)),
+  m_pos(difference_type(s.forward(0))),
   m_prev(0),
   m_next(0)
 {
@@ -477,7 +477,7 @@ pqxx::icursor_iterator::~icursor_iterator() throw ()
 icursor_iterator pqxx::icursor_iterator::operator++(int)
 {
   icursor_iterator old(*this);
-  m_pos = m_stream->forward();
+  m_pos = difference_type(m_stream->forward());
   m_here.clear();
   return old;
 }
@@ -485,7 +485,7 @@ icursor_iterator pqxx::icursor_iterator::operator++(int)
 
 icursor_iterator &pqxx::icursor_iterator::operator++()
 {
-  m_pos = m_stream->forward();
+  m_pos = difference_type(m_stream->forward());
   m_here.clear();
   return *this;
 }
@@ -498,7 +498,7 @@ icursor_iterator &pqxx::icursor_iterator::operator+=(difference_type n)
     if (!n) return *this;
     throw argument_error("Advancing icursor_iterator by negative offset");
   }
-  m_pos = m_stream->forward(n);
+  m_pos = difference_type(m_stream->forward(size_type(n)));
   m_here.clear();
   return *this;
 }

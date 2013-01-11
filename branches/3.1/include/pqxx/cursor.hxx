@@ -8,7 +8,7 @@
  *   C++-style wrappers for SQL cursors
  *   DO NOT INCLUDE THIS FILE DIRECTLY; include pqxx/pipeline instead.
  *
- * Copyright (c) 2004-2009, Jeroen T. Vermeulen <jtv@xs4all.nl>
+ * Copyright (c) 2004-2013, Jeroen T. Vermeulen <jtv@xs4all.nl>
  *
  * See COPYING for copyright license.  If you did not receive a file called
  * COPYING with this source code, please notify the distributor of this mistake,
@@ -307,7 +307,7 @@ public:
   stateless_cursor(
 	transaction_base &trans,
 	const PGSTD::string adopted_cursor) :
-    m_cur(trans, adopted_cursor, up, op)
+    m_cur(trans, adopted_cursor, op)
   {
     // Put cursor in known position
     m_cur.move(cursor_base::backward_all());

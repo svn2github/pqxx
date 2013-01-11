@@ -7,7 +7,7 @@
  *      implementation of the pqxx::connection_base abstract base class.
  *   pqxx::connection_base encapsulates a frontend to backend connection
  *
- * Copyright (c) 2001-2009, Jeroen T. Vermeulen <jtv@xs4all.nl>
+ * Copyright (c) 2001-2013, Jeroen T. Vermeulen <jtv@xs4all.nl>
  *
  * See COPYING for copyright license.  If you did not receive a file called
  * COPYING with this source code, please notify the distributor of this mistake,
@@ -904,7 +904,7 @@ string escape_param(connection_base &C,
   switch (treatment)
   {
   case treat_binary:
-    return "'" + escape_binary(string(in,len)) + "'";
+    return "'" + escape_binary(string(in, string::size_type(len))) + "'";
 
   case treat_string:
     return C.quote(in);
@@ -1061,9 +1061,9 @@ pqxx::result pqxx::connection_base::prepared_exec(
 #ifdef PQXX_HAVE_PQEXECPREPARED
     if (protocol_version() >= 3)
     {
-      internal::scoped_array<int> binary(nparams+1);
+      internal::scoped_array<int> binary(size_t(nparams+1));
       for (int i=0; i<expected_params; ++i)
-        binary[i] = (s.parameters[i].treatment == treat_binary);
+        binary[i] = (s.parameters[size_t(i)].treatment == treat_binary);
       for (int j=expected_params; j < nparams; ++j)
         binary[j] = (s.varargs_treatment == treat_binary);
       binary[nparams] = 0;
@@ -1093,7 +1093,8 @@ pqxx::result pqxx::connection_base::prepared_exec(
 		params[a],
 		paramlengths[a],
 		(a < expected_params) ?
-			s.parameters[a].treatment : s.varargs_treatment);
+			s.parameters[size_t(a)].treatment :
+			s.varargs_treatment);
 	if (a < nparams-1) Q << ',';
       }
       Q << ')';
@@ -1112,7 +1113,7 @@ pqxx::result pqxx::connection_base::prepared_exec(
 	           val = escape_param(*this,
 				params[n],
 				paramlengths[n],
-				s.parameters[n].treatment);
+				s.parameters[size_t(n)].treatment);
       const string::size_type keysz = key.size();
       // TODO: Skip quoted strings!  (And careful with multibyte encodings...)
       for (string::size_type h=S.find(key); h!=string::npos; h=S.find(key))

@@ -6,7 +6,7 @@
  *   DESCRIPTION
  *      implementation of bytea (binary string) conversions
  *
- * Copyright (c) 2003-2007, Jeroen T. Vermeulen <jtv@xs4all.nl>
+ * Copyright (c) 2003-2013, Jeroen T. Vermeulen <jtv@xs4all.nl>
  *
  * See COPYING for copyright license.  If you did not receive a file called
  * COPYING with this source code, please notify the distributor of this mistake,
@@ -16,6 +16,7 @@
  */
 #include "pqxx/compiler-internal.hxx"
 
+#include <cstdlib>
 #include <cstring>
 #include <new>
 #include <stdexcept>
@@ -60,7 +61,8 @@ pqxx::binarystring::binarystring(const result::field &F) :
       c = p[++i];
       if (isdigit(c) && isdigit(p[i+1]) && isdigit(p[i+2]))
       {
-	c = (DV(c)<<6) | (DV(p[i+1])<<3) | DV(p[i+2]);
+	c = static_cast<unsigned char>(
+		(DV(c)<<6) | (DV(p[i+1])<<3) | DV(p[i+2]));
 	i += 2;
       }
     }

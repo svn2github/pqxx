@@ -6,7 +6,7 @@
  *   DESCRIPTION
  *      Various utility functions for libpqxx
  *
- * Copyright (c) 2003-2008, Jeroen T. Vermeulen <jtv@xs4all.nl>
+ * Copyright (c) 2003-2013, Jeroen T. Vermeulen <jtv@xs4all.nl>
  *
  * See COPYING for copyright license.  If you did not receive a file called
  * COPYING with this source code, please notify the distributor of this mistake,
@@ -29,6 +29,14 @@
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+
+#ifdef PQXX_HAVE_SYS_SELECT_H
+#include <sys/select.h>
+#endif
+
+#ifdef HAVE_SYS_TYPES_H
+#include <sys/types.h>
 #endif
 
 #include <cerrno>
@@ -516,21 +524,6 @@ string string_traits<long double>::to_string(long double Obj)
 } // namespace pqxx
 
 
-namespace
-{
-size_t pqxx_strnlen(const char s[], size_t max)
-{
-#if defined(PQXX_HAVE_STRNLEN)
-  return strnlen(s,max);
-#else
-  size_t len;
-  for (len=0; len<max && s[len]; ++len) ;
-  return len;
-#endif
-}
-} // namespace
-
-
 void pqxx::internal::freemem_notif(pqxx::internal::pq::PGnotify *p) throw ()
 {
 #ifdef PQXX_HAVE_PQFREENOTIFY
@@ -677,6 +670,7 @@ void cpymsg(char buf[], const char input[], size_t buflen) throw ()
 #endif
 }
 
+#if defined(PQXX_HAVE_STRERROR_R)
 // Single Unix Specification version of strerror_r returns result code
 const char *strerror_r_result(int sus_return, char buf[], size_t len) throw ()
 {
@@ -693,12 +687,15 @@ const char *strerror_r_result(int sus_return, char buf[], size_t len) throw ()
 
   return buf;
 }
+#endif // defined(PQXX_HAVE_STRERROR_R)
 
+#if defined(PQXX_HAVE_STRERROR_R)
 // GNU version of strerror_r returns error string (which may be anywhere)
 const char *strerror_r_result(const char gnu_return[], char[], size_t) throw ()
 {
   return gnu_return;
 }
+#endif // defined(PQXX_HAVE_STRERROR_R)
 }
 
 
@@ -718,4 +715,3 @@ const char *pqxx::internal::strerror_wrapper(int err, char buf[], size_t len)
 #endif
   return res;
 }
-

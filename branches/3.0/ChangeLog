@@ -1,4 +1,9 @@
 2013-01-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/cursor.hxx, include/pxx/result.hxx, src/binarystring.cxx,
+ src/cursor.cxx, src/largeobject.cxx, src/pipeline.cxx,
+ src/prepared_statement.cxx, src/result.cxx, src/tablewriter.cxx, src/util.cxx:
+ - Compile fixes for clang++ 3.0.
+2013-01-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
  include/pqxx/compiler-internal.hxx, include/pqxx/largeobject.hxx,
  include/pqxx/result.hxx, include/pqxx/util.hxx, test/unit/test_escape.cxx:
  - Compile fixes for g++ 4.7.

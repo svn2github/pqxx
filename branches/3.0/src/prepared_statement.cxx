@@ -7,7 +7,7 @@
  *      Helper classes for defining and executing prepared statements
  *   See the connection_base hierarchy for more about prepared statements
  *
- * Copyright (c) 2006-2008, Jeroen T. Vermeulen <jtv@xs4all.nl>
+ * Copyright (c) 2006-2013, Jeroen T. Vermeulen <jtv@xs4all.nl>
  *
  * See COPYING for copyright license.  If you did not receive a file called
  * COPYING with this source code, please notify the distributor of this mistake,
@@ -63,8 +63,8 @@ pqxx::result pqxx::prepare::invocation::exec() const
   {
     if (m_nonnull[i])
     {
-      ptrs[i] = m_values[v].c_str();
-      lens[i] = int(m_values[v].size());
+      ptrs[i] = m_values[size_t(v)].c_str();
+      lens[i] = int(m_values[size_t(v)].size());
       ++v;
     }
     else
@@ -142,6 +142,3 @@ void pqxx::prepare::internal::prepared_def::addparam(
 {
   parameters.push_back(param(sqltype,treatment));
 }
-
-
-

@@ -1,4 +1,10 @@
 2013-01-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+ - Fix typo in earlier clang++ fix.
+ include/pqxx/cursor.hxx, include/pqxx/result.hxx, src/connection_base.cxx,
+ src/cursor.cxx, src/largeobject.cxx, src/pipeline.cxx:
+ - Compile fixes for clang++ 3.0.  Not done yet.
+2013-01-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
  include/pqxx/compiler-internal.hxx, include/pqxx/largeobject.hxx,
  include/pqxx/result.hxx, include/pqxx/util.hxx, test/unit/test_escape.cxx:
  - Compile fixes for g++ 4.7.

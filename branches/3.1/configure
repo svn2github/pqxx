@@ -16020,8 +16020,8 @@ $as_echo_n "checking ability to compile programs using the standard C library...
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 #include <string.h>
-	${usestd}
 	namespace std {} // In case string.h does not define it.
+	${usestd}
 	extern void f(size_t);
 int
 main ()
