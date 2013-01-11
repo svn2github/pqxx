@@ -57,7 +57,12 @@ subdir = test
 DIST_COMMON = $(noinst_HEADERS) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/config/m4/libtool.m4 \
+	$(top_srcdir)/config/m4/ltoptions.m4 \
+	$(top_srcdir)/config/m4/ltsugar.m4 \
+	$(top_srcdir)/config/m4/ltversion.m4 \
+	$(top_srcdir)/config/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/config/mkinstalldirs
@@ -302,7 +307,7 @@ with_postgres_lib = @with_postgres_lib@
 # The template2mak.py script should be available in the tools directory of the
 # libpqxx source archive.
 #
-# Generated from template '/tmp/libpqxx/branches/4.0/test/Makefile.am.template'.
+# Generated from template '/home/jtv/proj/libpqxx/branches/4.0/test/Makefile.am.template'.
 ################################################################################
 # Makefile.am is generated automatically for automake whenever test programs are
 # added to libpqxx.
