@@ -1,7 +1,7 @@
 4.0.1
  - Build fix for OS X.
  - Build fixes for clang++ 3.2.
- - Build fix for clang++ 3.0.
+ - Build fixes for clang++ 3.0.
  - Compatibility typedefs: pqxx::result::tuple & pqxx::result::field.
  - Supports C++11.
 4.0

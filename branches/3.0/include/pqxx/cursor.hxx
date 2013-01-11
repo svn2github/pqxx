@@ -337,7 +337,7 @@ public:
   {
     return internal::stateless_cursor_retrieve(
 	m_cur,
-	size(),
+	difference_type(size()),
 	begin_pos,
 	end_pos);
   }

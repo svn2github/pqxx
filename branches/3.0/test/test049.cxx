@@ -75,8 +75,10 @@ struct CountGreaterSmaller : unary_function<result::tuple, void>
     // Count number of entries with key greater/smaller than first row's key
     // using std::count_if<>()
     const result::size_type
-      Greater = count_if(R.begin(), R.end(), bind2nd(Cmp(Key),T)),
-      Smaller = count_if(R.begin(), R.end(), bind1st(Cmp(Key),T));
+      Greater = result::size_type(
+	count_if(R.begin(), R.end(), bind2nd(Cmp(Key),T))),
+      Smaller = result::size_type(
+	count_if(R.begin(), R.end(), bind1st(Cmp(Key),T)));
 
     cout << "'" << T[Key] << "': "
          << Greater << " greater, "

@@ -48,7 +48,7 @@ public:
   {
     char Buf[200];
     largeobjectaccess O(T, m_Object, ios::in);
-    const size_t len = O.read(Buf, sizeof(Buf)-1);
+    const size_t len = size_t(O.read(Buf, sizeof(Buf)-1));
     PQXX_CHECK_EQUAL(
 	string(Buf, len),
 	Contents,

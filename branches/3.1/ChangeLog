@@ -1,4 +1,9 @@
 2013-01-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configitems, configure.ac.in:
+ - Backport fix for unused function in strerror wrapper.
+ include/pqxx/cursor.hxx, src/util.cxx, test/unit/test_prepared_statement.cxx:
+ - Compile fixes for clang++ 3.0.
+2013-01-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
  src/result.cxx, src/statement_parameters.cxx, src/tablewriter.cxx,
  src/util.cxx:
  - Compile fixes for clang++ 3.0.

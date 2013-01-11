@@ -657,9 +657,9 @@ void pqxx::internal::sleep_seconds(int s)
 }
 
 
+#if !defined(PQXX_HAVE_STRERROR_R) || !defined(PQXX_HAVE_STRERROR_R_GNU)
 namespace
 {
-
 void cpymsg(char buf[], const char input[], size_t buflen) throw ()
 {
 #if defined(PQXX_HAVE_STRLCPY)
@@ -669,49 +669,39 @@ void cpymsg(char buf[], const char input[], size_t buflen) throw ()
   if (buflen) buf[buflen-1] = '\0';
 #endif
 }
-
-#if defined(PQXX_HAVE_STRERROR_R)
-// Single Unix Specification version of strerror_r returns result code
-const char *strerror_r_result(int sus_return, char buf[], size_t len) throw ()
-{
-  switch (sus_return)
-  {
-  case 0: break;
-  case -1: cpymsg(buf, "Unknown error", len); break;
-  default:
-    cpymsg(buf,
-	  "Unexpected result from strerror_r()!  Is it really SUS-compliant?",
-	  len);
-    break;
-  }
-
-  return buf;
 }
-#endif // defined(PQXX_HAVE_STRERROR_R)
-
-#if defined(PQXX_HAVE_STRERROR_R)
-// GNU version of strerror_r returns error string (which may be anywhere)
-const char *strerror_r_result(const char gnu_return[], char[], size_t) throw ()
-{
-  return gnu_return;
-}
-#endif // defined(PQXX_HAVE_STRERROR_R)
-}
+#endif
 
 
-const char *pqxx::internal::strerror_wrapper(int err, char buf[], size_t len)
+cstring pqxx::internal::strerror_wrapper(int err, char buf[], PGSTD::size_t len)
 	throw ()
 {
   if (!buf || len <= 0) return "No buffer provided for error message!";
 
   const char *res = buf;
 
-#if !defined(PQXX_HAVE_STRERROR_R)
+#if !defined(PQXX_HAVE_STRERROR_R) && !defined(PQXX_HAVE_STRERROR_S)
   cpymsg(buf, strerror(err), len);
+#elif defined(PQXX_HAVE_STRERROR_R_GNU)
+  // GNU strerror_r returns error string (which may be anywhere).
+  return strerror_r(err, buf, len);
+#elif defined(PQXX_HAVE_STRERROR_S)
+  // Windows equivalent of strerror_r returns result code.
+  if (strerror_s(buf, len, err) == 0) res = buf;
+  else cpymsg(buf, "Unknown error", len);
 #else
-  // This will pick the appropriate strerror_r() subwrapper using overloading
-  // (an idea first suggested by Bart Samwel.  Thanks a bundle, Bart!)
-  res = strerror_r_result(strerror_r(err,buf,len), buf, len);
+  // Single Unix Specification version of strerror_r returns result code.
+  switch (strerror_r(err, buf, len))
+  {
+  case 0: res = buf; break;
+  case -1: cpymsg(buf, "Unknown error", len); break;
+  default:
+    cpymsg(
+	buf,
+	"Unexpected result from strerror_r()!  Is it really SUS-compliant?",
+	len);
+    break;
+  }
 #endif
   return res;
 }

@@ -44,7 +44,10 @@ void test_062(connection_base &, transaction_base &T)
   {
     PQXX_CHECK(c != B.end(), "Premature end to binary string.");
 
-    const char x = TestStr.at(i), y = B.at(i), z = B.data()[i];
+    const char
+	x = TestStr.at(i),
+	y = static_cast<char>(B.at(i)),
+	z = static_cast<char>(B.data()[i]);
 
     PQXX_CHECK_EQUAL(
 	string(&x, 1),

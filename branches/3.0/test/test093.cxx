@@ -36,25 +36,25 @@ void test_093(connection_base &C, transaction_base &T)
   }
 
 #ifdef PQXX_HAVE_PQFTABLECOL
-  int x = R.table_column(2),
-      y = R.table_column(1),
-      z = R.table_column(int(0));
+  int x = int(R.table_column(2)),
+      y = int(R.table_column(1)),
+      z = int(R.table_column(int(0)));
 
   PQXX_CHECK_EQUAL(x, 0, "Wrong column number.");
   PQXX_CHECK_EQUAL(y, 1, "Wrong column number.");
   PQXX_CHECK_EQUAL(z, 2, "Wrong column number.");
 
-  x = R.table_column("x");
-  y = R.table_column("y");
-  z = R.table_column("z");
+  x = int(R.table_column("x"));
+  y = int(R.table_column("y"));
+  z = int(R.table_column("z"));
 
   PQXX_CHECK_EQUAL(x, 0, "Wrong number for named column.");
   PQXX_CHECK_EQUAL(y, 1, "Wrong number for named column.");
   PQXX_CHECK_EQUAL(z, 2, "Wrong number for named column.");
 
-  int xx = X[0].table_column(int(0)),
-      yx = X[0].table_column(result::tuple::size_type(1)),
-      zx = X[0].table_column("z");
+  int xx = int(X[0].table_column(int(0))),
+      yx = int(X[0].table_column(result::tuple::size_type(1))),
+      zx = int(X[0].table_column("z"));
 
   PQXX_CHECK_EQUAL(xx, 0, "Bad result from table_column(int).");
   PQXX_CHECK_EQUAL(yx, 1, "Bad result from table_column(size_type).");
