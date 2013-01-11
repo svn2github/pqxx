@@ -1,6 +1,7 @@
 3.1.1
  - Build fixes for clang++ 3.0.
  - Build fixes for g++ 4.7.
+ - Fixed failure to detect some integer overflows during conversion.
 3.1
  - Shared libraries are now versioned by ABI: 3.1 instead of 3.1.0 etc.
  - Threading behaviour is now documented, and can be queried.

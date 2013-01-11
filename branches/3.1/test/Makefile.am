@@ -9,7 +9,7 @@
 # The template2mak.py script should be available in the tools directory of the
 # libpqxx source archive.
 #
-# Generated from template '/tmp/libpqxx/branches/3.1/test/Makefile.am.template'.
+# Generated from template '/home/jtv/proj/libpqxx/branches/3.1/test/Makefile.am.template'.
 ################################################################################
 # Makefile.am is generated automatically for automake whenever test programs are
 # added to libpqxx.
