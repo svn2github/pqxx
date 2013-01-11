@@ -1,4 +1,8 @@
 2013-01-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ src/result.cxx, src/statement_parameters.cxx, src/tablewriter.cxx,
+ src/util.cxx:
+ - Compile fixes for clang++ 3.0.
+2013-01-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
  configure.ac.in:
  - Fix typo in earlier clang++ fix.
  include/pqxx/cursor.hxx, include/pqxx/result.hxx, src/connection_base.cxx,

@@ -6,7 +6,7 @@
  *   DESCRIPTION
  *      Various utility functions for libpqxx
  *
- * Copyright (c) 2003-2009, Jeroen T. Vermeulen <jtv@xs4all.nl>
+ * Copyright (c) 2003-2013, Jeroen T. Vermeulen <jtv@xs4all.nl>
  *
  * See COPYING for copyright license.  If you did not receive a file called
  * COPYING with this source code, please notify the distributor of this mistake,
@@ -245,6 +245,7 @@ void cpymsg(char buf[], const char input[], size_t buflen) throw ()
 #endif
 }
 
+#if defined(PQXX_HAVE_STRERROR_R)
 // Single Unix Specification version of strerror_r returns result code
 const char *strerror_r_result(int sus_return, char buf[], size_t len) throw ()
 {
@@ -261,12 +262,15 @@ const char *strerror_r_result(int sus_return, char buf[], size_t len) throw ()
 
   return buf;
 }
+#endif // defined(PQXX_HAVE_STRERROR_R)
 
+#if defined(PQXX_HAVE_STRERROR_R)
 // GNU version of strerror_r returns error string (which may be anywhere)
 const char *strerror_r_result(const char gnu_return[], char[], size_t) throw ()
 {
   return gnu_return;
 }
+#endif // defined(PQXX_HAVE_STRERROR_R)
 }
 
 

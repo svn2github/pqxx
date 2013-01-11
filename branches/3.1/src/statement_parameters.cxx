@@ -7,7 +7,7 @@
  *      Common implementation for statement parameter lists.
  *   See the connection_base hierarchy for more about prepared statements
  *
- * Copyright (c) 2006-2009, Jeroen T. Vermeulen <jtv@xs4all.nl>
+ * Copyright (c) 2006-2013, Jeroen T. Vermeulen <jtv@xs4all.nl>
  *
  * See COPYING for copyright license.  If you did not receive a file called
  * COPYING with this source code, please notify the distributor of this mistake,
@@ -61,8 +61,8 @@ int pqxx::internal::statement_parameters::marshall(
   {
     if (m_nonnull[i])
     {
-      values[i] = m_values[v].c_str();
-      lengths[i] = int(m_values[v].size());
+      values[i] = m_values[size_t(v)].c_str();
+      lengths[i] = int(m_values[size_t(v)].size());
       ++v;
     }
     else
