@@ -9,7 +9,7 @@
 # The template2mak.py script should be available in the tools directory of the
 # libpqxx source archive.
 #
-# Generated from template '/home/jtv/proj/libpqxx/branches/4.0/win32/vc-libpqxx.mak.template'.
+# Generated from template '/tmp/libpqxx/branches/4.0/win32/vc-libpqxx.mak.template'.
 ################################################################################
 # Visual C++ makefile for libpqxx
 # This file was created by Bart Samwel.

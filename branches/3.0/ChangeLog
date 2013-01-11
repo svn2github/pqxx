@@ -1,3 +1,10 @@
+2013-01-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/compiler-internal.hxx, include/pqxx/largeobject.hxx,
+ include/pqxx/result.hxx, include/pqxx/util.hxx, test/unit/test_escape.cxx:
+ - Compile fixes for g++ 4.7.
+2013-01-10  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+ - Fix w clang++ 3.0: basic C-library test broke.
 2010-02-15  Jeroen T. Vermeulen <jtv@xs4all.nl>
  configure.ac.in:
  - Fixed #104: -Werror option always used.  Thanks Ray Dassen.

@@ -1,6 +1,8 @@
 3.0.3
  - No longer enables -Werror on gcc when not building in maintainer mode.
  - Build problem with RedHat 5 and CentOS 5 is now a warning, not an error.
+ - Build fix for clang++ 3.0.
+ - Build fixes for g++ 4.7.
 3.0.2
  - Shared libraries are now versioned by ABI: 3.0 instead of 3.0.2 etc.
  - Fixed compile warnings on some 32-bit configurations.

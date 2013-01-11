@@ -1,3 +1,6 @@
+2013-01-10  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ configure.ac.in:
+ - Fix w clang++ 3.0: basic C-library test broke.
 2012-08-03  Jeroen T. Vermeulen <jtv@xs4all.nl>
  include/pqxx/largeobject.hxx:
  - Backported fix for #252: clang++ 3.2 compile error.  Thanks Amy Troschinetz.
