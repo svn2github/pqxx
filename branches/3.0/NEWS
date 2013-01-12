@@ -1,4 +1,5 @@
 3.0.3
+ - Support for REPEATABLE READ isolation level.
  - No longer enables -Werror on gcc when not building in maintainer mode.
  - Build problem with RedHat 5 and CentOS 5 is now a warning, not an error.
  - Build fixes for clang++ 3.0.

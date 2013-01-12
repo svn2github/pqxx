@@ -1,4 +1,5 @@
 4.0.1
+ - Support for REPEATABLE READ isolation level.
  - Build fix for OS X.
  - Build fixes for clang++ 3.2.
  - Build fixes for clang++ 3.0.

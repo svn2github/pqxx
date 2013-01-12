@@ -1,3 +1,7 @@
+2013-01-12  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/isolation.hxx:
+ - Support for REPEATABLE READ isolation level.  Thanks pawsa.
+ - Fixes #259.
 2013-01-11  Jeroen T. Vermeulen <jtv@xs4all.nl>
  configitems, configure.ac.in:
  - Backport fix for unused function in strerror wrapper.
