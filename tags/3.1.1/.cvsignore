@@ -1,0 +1,8 @@
+libpqxx.spec
+config.log
+pqxx-config
+Makefile
+config.status
+libpqxx.pc
+autom4te.cache
+.*.swp
