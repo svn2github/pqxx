@@ -4,6 +4,7 @@
  - Build problem with RedHat 5 and CentOS 5 is now a warning, not an error.
  - Build fixes for clang++ 3.0.
  - Build fixes for g++ 4.7.
+ - Build fix for BSD (and possibly other grep flavours).
 3.0.2
  - Shared libraries are now versioned by ABI: 3.0 instead of 3.0.2 etc.
  - Fixed compile warnings on some 32-bit configurations.

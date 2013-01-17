@@ -4,6 +4,7 @@
  - Build fixes for clang++ 3.2.
  - Build fixes for clang++ 3.0.
  - Build fix for MinGW.
+ - Build fix for BSD (and possibly other grep flavours).
  - Compatibility typedefs: pqxx::result::tuple & pqxx::result::field.
  - Supports C++11.
  - Fixed failure to detect some integer overflows during conversion.

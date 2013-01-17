@@ -2,6 +2,7 @@
  - Support for REPEATABLE READ isolation level.
  - Build fixes for clang++ 3.0.
  - Build fixes for g++ 4.7.
+ - Build fix for BSD (and possibly other grep flavours).
  - Fixed failure to detect some integer overflows during conversion.
 3.1
  - Shared libraries are now versioned by ABI: 3.1 instead of 3.1.0 etc.
