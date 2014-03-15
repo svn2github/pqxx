@@ -1,3 +1,5 @@
+4.0.2
+ - Compile fixes.
 4.0.1
  - Support for REPEATABLE READ isolation level.
  - Build fix for OS X.

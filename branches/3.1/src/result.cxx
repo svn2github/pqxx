@@ -7,7 +7,7 @@
  *      implementation of the pqxx::result class and support classes.
  *   pqxx::result represents the set of result tuples from a database query
  *
- * Copyright (c) 2001-2010, Jeroen T. Vermeulen <jtv@xs4all.nl>
+ * Copyright (c) 2001-2014, Jeroen T. Vermeulen <jtv@xs4all.nl>
  *
  * See COPYING for copyright license.  If you did not receive a file called
  * COPYING with this source code, please notify the distributor of this mistake,
@@ -337,7 +337,7 @@ pqxx::oid pqxx::result::column_table(tuple::size_type ColNum) const
 pqxx::result::tuple::size_type
 pqxx::result::table_column(tuple::size_type ColNum) const
 {
-  const tuple::size_type n = size_type(PQftablecol(m_data, int(ColNum)));
+  const tuple::size_type n = tuple::size_type(PQftablecol(m_data, int(ColNum)));
   if (n) return n-1;
 
   // Failed.  Now find out why, so we can throw a sensible exception.
@@ -405,7 +405,7 @@ pqxx::result::column_name(pqxx::result::tuple::size_type Number) const
 
 pqxx::result::tuple::size_type pqxx::result::columns() const throw ()
 {
-  return m_data ? size_type(PQnfields(m_data)) : 0;
+  return m_data ? tuple::size_type(PQnfields(m_data)) : 0;
 }
 
 
