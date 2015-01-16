@@ -8,7 +8,7 @@
  *   pqxx::notification_receiver handles incoming notifications.
  *   DO NOT INCLUDE THIS FILE DIRECTLY; include pqxx/notification instead.
  *
- * Copyright (c) 2011, Jeroen T. Vermeulen <jtv@xs4all.nl>
+ * Copyright (c) 2015, Jeroen T. Vermeulen <jtv@xs4all.nl>
  *
  * See COPYING for copyright license.  If you did not receive a file called
  * COPYING with this source code, please notify the distributor of this mistake,
@@ -95,6 +95,5 @@ private:
 };
 }
 
-#include "pqxx/compiler-internal-pre.hxx"
 #include "pqxx/compiler-internal-post.hxx"
 #endif
