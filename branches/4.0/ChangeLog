@@ -1,4 +1,8 @@
 2015-01-16  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ include/pqxx/util.hxx:
+ - Fix check for TR1 headers.
+ - Fixes #305.  Thanks Steve in Blighty.
+2015-01-16  Jeroen T. Vermeulen <jtv@xs4all.nl>
  src/largeobject.cxx:
  - Include <algorithm> so that min()/max() work.
 2015-01-03  Jeroen T. Vermeulen <jtv@xs4all.nl>
