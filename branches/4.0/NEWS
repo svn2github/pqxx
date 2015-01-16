@@ -1,5 +1,6 @@
 4.0.2
  - Compile fixes.
+ - Build tooling uses /usr/bin/env python instead of /usr/bin/python.
 4.0.1
  - Support for REPEATABLE READ isolation level.
  - Build fix for OS X.
