@@ -10,6 +10,7 @@
  - Build fix for BSD (and possibly other grep flavours).
  - Compatibility typedefs: pqxx::result::tuple & pqxx::result::field.
  - Supports C++11.
+ - Fixed failure to abort uncommitted subtransactions on destruction.
  - Fixed failure to detect some integer overflows during conversion.
 4.0
  - API change: noticers are gone!  Use errorhandlers to capture error output.
