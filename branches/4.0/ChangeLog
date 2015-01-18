@@ -1,3 +1,6 @@
+2015-01-18  Jeroen T. Vermeulen <jtv@xs4all.nl>
+ test/test069.cxx:
+ - Fix spurious failure; sometimes the number of tables seems to change.
 2015-01-16  Jeroen T. Vermeulen <jtv@xs4all.nl>
  tools/extract-version:
  - Replace obsolete sed -E option.  Fixes #265.
